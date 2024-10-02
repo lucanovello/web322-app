@@ -1,0 +1,21 @@
+{
+  "name": "web322-app",
+  "version": "1.0.0",
+  "description": "Web322 App for Assignments",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "web322",
+    "Luca",
+    "Novello",
+    "Assignment"
+  ],
+  "author": "Luca Novello",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
