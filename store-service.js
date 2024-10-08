@@ -5,6 +5,7 @@ const items = [];
 const categories = [];
 
 module.exports.initialize = () => {
+  console.log(process.cwd(), "/views/about.html");
   return new Promise((resolve, reject) => {
     fs.readFile(
       path.join(process.cwd(), "/data/items.json"),
@@ -46,8 +47,6 @@ module.exports.getPublishedItems = () => {
   return new Promise((resolve, reject) => {
     const publishedItems = items.filter((item) => item.published === true);
     if (publishedItems.length > 0) {
-      console.log(publishedItems);
-
       resolve(publishedItems);
     } else {
       reject("no published items available");

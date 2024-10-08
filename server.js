@@ -1,3 +1,13 @@
+/*********************************************************************************
+WEB322 – Assignment 02
+I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part * of this assignment has
+been copied manually or electronically from any other source (including 3rd party web sites) or distributed to other students.
+Name:                   Luca Novello
+Student ID:             038515003
+Date:                   10-08-2024
+Cyclic Web App URL:     https://web322app-lucanovello.vercel.app/
+GitHub Repository URL:  https://github.com/lucanovello/web322-app
+********************************************************************************/
 const path = require("path");
 const express = require("express");
 const storeService = require("./store-service.js");
@@ -5,23 +15,22 @@ const storeService = require("./store-service.js");
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
-let currentUrl = "";
-
-app.use(express.static("public"));
+app.use(express.static(path.join(process.cwd(), "public")));
+app.set("views", path.join(process.cwd(), "/views"));
 
 // ROUTES
 app.get("/", (req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   res.redirect("/about");
 });
 
 app.get("/about", (req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   res.sendFile(path.join(process.cwd(), "/views/about.html"));
 });
 
 app.get("/shop", (req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   storeService
     .getPublishedItems()
     .then((pubItems) => res.send(pubItems))
@@ -29,7 +38,7 @@ app.get("/shop", (req, res) => {
 });
 
 app.get("/items", (req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   storeService
     .getAllItems()
     .then((items) => res.send(items))
@@ -37,7 +46,7 @@ app.get("/items", (req, res) => {
 });
 
 app.get("/categories", (req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   storeService
     .getCategories()
     .then((categories) => res.send(categories))
@@ -45,7 +54,7 @@ app.get("/categories", (req, res) => {
 });
 
 app.use((req, res) => {
-  currentUrl = req.url;
+  console.log(req.url);
   res.status(404).sendFile(process.cwd() + "/views/404_page.html");
 });
 
@@ -64,5 +73,3 @@ storeService
     console.error("ERROR: Initialization Failed:", err);
     process.exit(1);
   });
-
-console.log(currentUrl);
