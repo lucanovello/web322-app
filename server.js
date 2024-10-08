@@ -15,8 +15,8 @@ const storeService = require("./store-service.js");
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
-app.use(express.static(path.join(process.cwd(), "public")));
-app.set("views", path.join(process.cwd(), "/views"));
+app.use(express.static(path.join(__dirname, "public")));
+app.set("views", path.join(__dirname, "/views"));
 
 // ROUTES
 app.get("/", (req, res) => {
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 app.get("/about", (req, res) => {
   console.log(req.url);
-  res.sendFile(path.join(process.cwd(), "/views/about.html"));
+  res.sendFile(path.join(__dirname, "/views/about.html"));
 });
 
 app.get("/shop", (req, res) => {
@@ -34,7 +34,10 @@ app.get("/shop", (req, res) => {
   storeService
     .getPublishedItems()
     .then((pubItems) => res.send(pubItems))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      console.error("Error fetching published items:", err);
+      res.status(500).send(err);
+    });
 });
 
 app.get("/items", (req, res) => {
@@ -42,7 +45,10 @@ app.get("/items", (req, res) => {
   storeService
     .getAllItems()
     .then((items) => res.send(items))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      console.error("Error fetching all items:", err);
+      res.status(500).send(err);
+    });
 });
 
 app.get("/categories", (req, res) => {
@@ -50,12 +56,15 @@ app.get("/categories", (req, res) => {
   storeService
     .getCategories()
     .then((categories) => res.send(categories))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      console.error("Error fetching categories:", err);
+      res.status(500).send(err);
+    });
 });
 
 app.use((req, res) => {
   console.log(req.url);
-  res.status(404).sendFile(process.cwd() + "/views/404_page.html");
+  res.status(404).sendFile(__dirname + "/views/404_page.html");
 });
 
 // Initialize the store service
