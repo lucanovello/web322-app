@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 app.get("/about", (req, res) => {
   currentUrl = req.url;
-  res.sendFile(path.join(__dirname, "/views/about.html"));
+  res.sendFile(path.join(process.cwd(), "/views/about.html"));
 });
 
 app.get("/shop", (req, res) => {
@@ -46,7 +46,7 @@ app.get("/categories", (req, res) => {
 
 app.use((req, res) => {
   currentUrl = req.url;
-  res.status(404).sendFile(__dirname + "/views/404_page.html");
+  res.status(404).sendFile(process.cwd() + "/views/404_page.html");
 });
 
 // Initialize the store service

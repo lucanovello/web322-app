@@ -7,7 +7,7 @@ const categories = [];
 module.exports.initialize = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(
-      path.join(__dirname, "/data/items.json"),
+      path.join(process.cwd(), "/data/items.json"),
       "utf8",
       (err, data) => {
         if (err) {
@@ -15,7 +15,7 @@ module.exports.initialize = () => {
         } else {
           items.push(...JSON.parse(data));
           fs.readFile(
-            path.join(__dirname, "/data/categories.json"),
+            path.join(process.cwd(), "/data/categories.json"),
             "utf8",
             (err, data) => {
               if (err) {
