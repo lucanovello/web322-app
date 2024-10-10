@@ -5,7 +5,7 @@ been copied manually or electronically from any other source (including 3rd part
 Name:                   Luca Novello
 Student ID:             038515003
 Date:                   10-08-2024
-Cyclic Web App URL:     https://web322app-lucanovello.vercel.app/
+Vercel Web App URL:     https://web322app-lucanovello.vercel.app/
 GitHub Repository URL:  https://github.com/lucanovello/web322-app
 ********************************************************************************/
 const path = require("path");
