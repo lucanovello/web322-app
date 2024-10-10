@@ -1,0 +1,270 @@
+/*------------------------------------------ FONTS ------------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* font-family: 'Poppins', sans-serif; */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+// font-family: "Inter", sans-serif;
+
+/*------------------------------------------ VARIABLES ------------------------------------------*/
+$nav-bg-color: hsl(220, 50%, 10%);
+$nav-bg-hover-color: hsl(220, 30%, 30%);
+
+$nav-height: 60px;
+$nav-mobile-height: 80px;
+
+$mobile-main-padding-x: 8%;
+$mobile-main-padding-y: 4vh;
+
+$nav-text-color: hsl(0, 0%, 90%);
+
+$border-dashed: 1px dashed hsla(0, 0%, 100%, 0.7);
+
+$text-logo-size: 1.2rem;
+$text-heading-size: 2.5rem;
+$text-body-size: 1rem;
+
+$link-transition: 0.2s ease;
+$link-transition2: 0.4s ease-in-out;
+$link-pulse: pulse-text-glow 1s infinite alternate,
+  pulse-nav-bg 1s infinite alternate;
+
+/*------------------------------------------ ANIMATIONS ------------------------------------------*/
+@keyframes pulse-logo-glow {
+  0% {
+    color: $nav-text-color;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  }
+}
+@keyframes pulse-text-glow {
+  0% {
+    color: $nav-text-color;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0);
+  }
+  100% {
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+  }
+}
+@keyframes pulse-nav-bg {
+  0% {
+    background: $nav-bg-color;
+  }
+  100% {
+    background: $nav-bg-hover-color;
+  }
+}
+
+/*------------------------------------------ MIXINS ------------------------------------------*/
+@mixin flex($justify: flex-start, $align: flex-start, $direction: row) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+@mixin text-logo() {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+@mixin text-nav-link($size: 1rem) {
+  font-family: "Poppins", sans-serif;
+  font-size: $size;
+  font-weight: 300;
+}
+@mixin text-heading1($size: 2.5rem) {
+  font-family: "Poppins", sans-serif;
+  font-size: $size;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+@mixin text-heading2($size: 2rem) {
+  font-family: "Poppins", sans-serif;
+  font-size: $size;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+@mixin text-body($size: 1rem) {
+  font-family: "Inter", sans-serif;
+  font-size: $size;
+  font-weight: 400;
+}
+
+/*------------------------------------------ STYLES ------------------------------------------*/
+/**************Reset**************/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  font-size: 15px;
+}
+
+/**************Custom**************/
+body {
+  @include flex($justify: flex-start, $align: flex-start, $direction: column);
+  @include text-body();
+  width: 100%;
+  min-width: 260px;
+  min-height: 100vh;
+  background: white;
+}
+
+.nav-container {
+  @include flex($justify: space-between, $align: center, $direction: row);
+  width: 100%;
+  height: $nav-height;
+  padding: 0 5%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: $nav-text-color;
+  background: $nav-bg-color;
+  // border-bottom: 1px solid white;
+  // box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease;
+  z-index: 9;
+
+  .nav-logo {
+    @include flex($justify: center, $align: center, $direction: column);
+    @include text-logo();
+    padding: 0 2em;
+    height: 100%;
+    line-height: 1;
+    span {
+      font-weight: 200;
+    }
+    transition: $link-transition;
+  }
+
+  .nav-logo:hover {
+    animation: pulse-logo-glow 1s infinite alternate;
+  }
+
+  .nav-menu-wrapper {
+    @include flex($justify: space-between, $align: center, $direction: row);
+    width: 100%;
+    max-width: 500px;
+    min-width: 200px;
+    height: 100%;
+    list-style: none;
+
+    .nav-menu-item {
+      @include flex($justify: center, $align: center, $direction: row);
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transition: $link-transition, border $link-transition;
+
+      .nav-menu-item-link {
+        @include flex($justify: center, $align: center, $direction: row);
+        @include text-nav-link();
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+    }
+    .nav-menu-item:hover {
+      animation: $link-pulse;
+    }
+    .nav-menu-item-link:hover {
+    }
+  }
+}
+
+.main-container {
+  @include flex($justify: flex-start, $align: flex-start, $direction: row);
+  h2 {
+    @include text-heading2();
+    margin-bottom: 1vh;
+    color: black;
+    line-height: 1;
+  }
+  p {
+    @include text-body();
+    margin-bottom: 2vh;
+    line-height: 1.5;
+    color: #242424;
+  }
+
+  .main-aside {
+    @include flex($justify: flex-start, $align: center, $direction: column);
+    width: 20%;
+    min-width: 200px;
+    min-height: calc(100vh - #{$nav-height});
+    padding: 4vh 2%;
+    text-align: center;
+    background: linear-gradient(
+      to bottom right,
+      hsl(200, 10%, 90%),
+      hsl(210, 15%, 80%)
+    );
+    // border-right: 1px solid white;
+    // box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+  }
+  .main-article {
+    @include flex($justify: flex-start, $align: flex-start, $direction: column);
+    width: 80%;
+    padding: 4vh 4%;
+    h2 {
+      @include text-heading1();
+      margin-bottom: 2vh;
+      color: black;
+      line-height: 1;
+    }
+  }
+}
+
+/*------------------------------------------ RESPONSIVE ------------------------------------------*/
+@media screen and (max-width: 700px) {
+  .nav-container {
+    height: $nav-mobile-height;
+    padding: 0 $mobile-main-padding-x;
+    .nav-logo {
+      padding: 0;
+    }
+    .nav-menu-wrapper {
+      display: none;
+    }
+  }
+  .main-container {
+    @include flex(
+      $justify: flex-start,
+      $align: center,
+      $direction: column-reverse
+    );
+    text-align: center;
+    h2 {
+      @include text-heading1();
+    }
+    .main-aside {
+      width: 100%;
+      padding: $mobile-main-padding-y $mobile-main-padding-x;
+      min-width: initial;
+      min-height: initial;
+      text-align: justify;
+      text-align-last: center;
+      border: none;
+    }
+    .main-article {
+      @include flex($justify: flex-start, $align: center, $direction: column);
+      width: 100%;
+      padding: $mobile-main-padding-y $mobile-main-padding-x;
+      text-align: justify;
+      text-align-last: center;
+    }
+  }
+}

@@ -19,51 +19,51 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "/views"));
 
 // ROUTES
+// Home route
 app.get("/", (req, res) => {
-  console.log(req.url);
   res.redirect("/about");
 });
 
+// About route
 app.get("/about", (req, res) => {
-  console.log(req.url);
   res.sendFile(path.join(__dirname, "/views/about.html"));
 });
 
+// Shop route
 app.get("/shop", (req, res) => {
-  console.log(req.url);
   storeService
     .getPublishedItems()
-    .then((pubItems) => res.send(pubItems))
+    .then((pubItems) => res.json(pubItems))
     .catch((err) => {
-      console.error("Error fetching published items:", err);
-      res.status(500).send(err);
+      console.error(err);
+      res.json({ message: err });
     });
 });
 
+// Items route
 app.get("/items", (req, res) => {
-  console.log(req.url);
   storeService
     .getAllItems()
-    .then((items) => res.send(items))
+    .then((items) => res.json(items))
     .catch((err) => {
-      console.error("Error fetching all items:", err);
-      res.status(500).send(err);
+      console.error(err);
+      res.json({ message: err });
     });
 });
 
+// Categories route
 app.get("/categories", (req, res) => {
-  console.log(req.url);
   storeService
     .getCategories()
-    .then((categories) => res.send(categories))
+    .then((categories) => res.json(categories))
     .catch((err) => {
-      console.error("Error fetching categories:", err);
-      res.status(500).send(err);
+      console.error(err);
+      res.json({ message: err });
     });
 });
 
+// 404 route
 app.use((req, res) => {
-  console.log(req.url);
   res.status(404).sendFile(__dirname + "/views/404_page.html");
 });
 
@@ -79,6 +79,8 @@ storeService
     );
   })
   .catch((err) => {
-    console.error("ERROR: Initialization Failed:", err);
+    // Log the error
+    console.error("ERROR: Initialization Failure:", err);
+    // Exit the process
     process.exit(1);
   });

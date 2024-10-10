@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "watch": "node --watch server.js"
+    "start": "nodemon server.js",
+    "watch": "nodemon --watch server.js",
+    "build-css": "sass --no-source-map --watch scss:public/css"
   },
   "keywords": [
     "web322",
@@ -18,5 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "sass": "^1.79.4"
   }
 }

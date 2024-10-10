@@ -37,7 +37,7 @@ module.exports.getAllItems = () => {
     if (items.length > 0) {
       resolve(items);
     } else {
-      reject("no items available");
+      reject("No Items available");
     }
   });
 };
@@ -48,7 +48,7 @@ module.exports.getPublishedItems = () => {
     if (publishedItems.length > 0) {
       resolve(publishedItems);
     } else {
-      reject("no published items available");
+      reject("No Shop Items available");
     }
   });
 };
@@ -58,7 +58,7 @@ module.exports.getCategories = () => {
     if (categories.length > 0) {
       resolve(categories);
     } else {
-      reject("no categories available");
+      reject("No Categories available");
     }
   });
 };
