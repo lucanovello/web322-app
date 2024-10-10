@@ -138,22 +138,15 @@ body {
   text-transform: uppercase;
 }
 .nav-container .nav-menu-wrapper .nav-menu-item:hover {
-  animation: pulse-text-glow 1s infinite alternate, pulse-nav-bg 1s infinite alternate;
+  animation: pulse-text-glow 1s infinite alternate,
+    pulse-nav-bg 1s infinite alternate;
 }
 .main-container {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: row;
-}
-.main-container h2 {
-  font-family: "Poppins", sans-serif;
-  font-size: 2rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 1vh;
-  color: black;
-  line-height: 1;
+  width: 100%;
 }
 .main-container p {
   font-family: "Inter", sans-serif;
@@ -173,9 +166,22 @@ body {
   min-height: calc(100vh - 60px);
   padding: 4vh 2%;
   text-align: center;
-  background: linear-gradient(to bottom right, hsl(200, 10%, 90%), hsl(210, 15%, 80%));
+  background: linear-gradient(
+    to bottom right,
+    hsl(200, 10%, 90%),
+    hsl(210, 15%, 80%)
+  );
 }
-.main-container .main-article {
+.main-container .main-aside h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 1vh;
+  color: black;
+  line-height: 1;
+}
+.main-container .main-section {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -184,7 +190,7 @@ body {
   padding: 4vh 4%;
   text-align: justify;
 }
-.main-container .main-article h2 {
+.main-container .main-section h2 {
   font-family: "Poppins", sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
@@ -192,6 +198,38 @@ body {
   margin-bottom: 2vh;
   color: black;
   line-height: 1;
+}
+.main-container .main-section-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  padding: 4vh 4%;
+  text-align: center;
+}
+.main-container .main-section-error h2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  font-family: "Poppins", sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 2vh;
+  color: black;
+  line-height: 1;
+}
+.main-container .main-section-error p {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: black;
 }
 
 /*------------------------------------------ RESPONSIVE ------------------------------------------*/
@@ -228,7 +266,7 @@ body {
     text-align-last: center;
     border: none;
   }
-  .main-container .main-article {
+  .main-container .main-section {
     display: flex;
     justify-content: flex-start;
     align-items: center;

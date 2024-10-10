@@ -74,16 +74,10 @@ $link-pulse: pulse-text-glow 1s infinite alternate,
   font-size: $size;
   font-weight: 300;
 }
-@mixin text-heading1($size: 2.5rem) {
+@mixin text-heading($size: 2.5rem, $weight: 900) {
   font-family: "Poppins", sans-serif;
   font-size: $size;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-@mixin text-heading2($size: 2rem) {
-  font-family: "Poppins", sans-serif;
-  font-size: $size;
-  font-weight: 800;
+  font-weight: $weight;
   text-transform: uppercase;
 }
 @mixin text-body($size: 1rem) {
@@ -113,7 +107,7 @@ html {
 
 /**************Custom**************/
 body {
-  @include flex($justify: flex-start, $align: flex-start, $direction: column);
+  @include flex(flex-start, flex-start, column);
   @include text-body();
   width: 100%;
   min-width: 260px;
@@ -122,7 +116,7 @@ body {
 }
 
 .nav-container {
-  @include flex($justify: space-between, $align: center, $direction: row);
+  @include flex(space-between, center, row);
   width: 100%;
   height: $nav-height;
   padding: 0 5%;
@@ -138,7 +132,7 @@ body {
   z-index: 9;
 
   .nav-logo {
-    @include flex($justify: center, $align: center, $direction: column);
+    @include flex(center, center, column);
     @include text-logo();
     padding: 0 2em;
     height: 100%;
@@ -154,7 +148,7 @@ body {
   }
 
   .nav-menu-wrapper {
-    @include flex($justify: space-between, $align: center, $direction: row);
+    @include flex(space-between, center, row);
     width: 100%;
     max-width: 500px;
     min-width: 200px;
@@ -162,14 +156,14 @@ body {
     list-style: none;
 
     .nav-menu-item {
-      @include flex($justify: center, $align: center, $direction: row);
+      @include flex(center, center, row);
       width: 100%;
       height: 100%;
       cursor: pointer;
       transition: $link-transition, border $link-transition;
 
       .nav-menu-item-link {
-        @include flex($justify: center, $align: center, $direction: row);
+        @include flex(center, center, row);
         @include text-nav-link();
         width: 100%;
         height: 100%;
@@ -186,13 +180,9 @@ body {
 }
 
 .main-container {
-  @include flex($justify: flex-start, $align: flex-start, $direction: row);
-  h2 {
-    @include text-heading2();
-    margin-bottom: 1vh;
-    color: black;
-    line-height: 1;
-  }
+  @include flex(flex-start, flex-start, row);
+  width: 100%;
+
   p {
     @include text-body();
     margin-bottom: 2vh;
@@ -201,7 +191,7 @@ body {
   }
 
   .main-aside {
-    @include flex($justify: flex-start, $align: center, $direction: column);
+    @include flex(flex-start, center, column);
     width: 15%;
     min-width: 200px;
     min-height: calc(100vh - #{$nav-height});
@@ -212,19 +202,41 @@ body {
       hsl(200, 10%, 90%),
       hsl(210, 15%, 80%)
     );
-    // border-right: 1px solid white;
-    // box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    h2 {
+      @include text-heading(2rem);
+      margin-bottom: 1vh;
+      color: black;
+      line-height: 1;
+    }
   }
-  .main-article {
-    @include flex($justify: flex-start, $align: flex-start, $direction: column);
+  .main-section {
+    @include flex(flex-start, flex-start, column);
     width: 80%;
     padding: 4vh 4%;
     text-align: justify;
     h2 {
-      @include text-heading1();
+      @include text-heading();
       margin-bottom: 2vh;
       color: black;
       line-height: 1;
+    }
+  }
+  .main-section-error {
+    @include flex(center, center, column);
+    width: 80%;
+    padding: 4vh 4%;
+    text-align: center;
+    h2 {
+      @include flex(flex-start, center, row);
+      @include text-heading(4rem);
+      margin-bottom: 2vh;
+      color: black;
+      line-height: 1;
+    }
+    p {
+      @include flex(flex-start, center, row);
+      @include text-body(1.5rem);
+      color: black;
     }
   }
 }
@@ -242,14 +254,10 @@ body {
     }
   }
   .main-container {
-    @include flex(
-      $justify: flex-start,
-      $align: center,
-      $direction: column-reverse
-    );
+    @include flex(flex-start, center, column-reverse);
     text-align: center;
     h2 {
-      @include text-heading1();
+      @include text-heading();
     }
     .main-aside {
       width: 100%;
@@ -260,8 +268,8 @@ body {
       text-align-last: center;
       border: none;
     }
-    .main-article {
-      @include flex($justify: flex-start, $align: center, $direction: column);
+    .main-section {
+      @include flex(flex-start, center, column);
       width: 100%;
       padding: $mobile-main-padding-y $mobile-main-padding-x;
       text-align: justify;
