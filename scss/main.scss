@@ -41,11 +41,11 @@ $link-pulse: pulse-text-glow 1s infinite alternate,
 @keyframes pulse-text-glow {
   0% {
     color: $nav-text-color;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0);
+    text-shadow: 0 0 0px hsla(180, 0%, 100%, 0);
   }
   100% {
     color: white;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px hsla(180, 0%, 100%, 1);
   }
 }
 @keyframes pulse-nav-bg {
@@ -143,14 +143,15 @@ body {
     transition: $link-transition;
   }
 
-  .nav-logo:hover {
+  .nav-logo:hover,
+  .active {
     animation: pulse-logo-glow 1s infinite alternate;
   }
 
   .nav-menu-wrapper {
     @include flex(space-between, center, row);
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
     min-width: 200px;
     height: 100%;
     list-style: none;
@@ -174,8 +175,15 @@ body {
     .nav-menu-item:hover {
       animation: $link-pulse;
     }
-    .nav-menu-item-link:hover {
+    .active {
+      animation: pulse-text-glow 1s infinite alternate;
     }
+  }
+  // .nav-menu-wrapper:hover .active {
+  //   animation: none;
+  // }
+  .nav-menu-wrapper:hover .active:hover {
+    animation: $link-pulse;
   }
 }
 
@@ -239,6 +247,23 @@ body {
       color: black;
     }
   }
+
+  .main-section-form {
+    @include flex(flex-start, flex-start, column);
+    width: 80%;
+    padding: 4vh 4%;
+    text-align: left;
+
+    .form-container {
+      @include flex(flex-start, flex-start, column);
+      width: 100%;
+      fieldset {
+        @include flex(flex-start, flex-start, column);
+        width: 100%;
+        padding: 1vh;
+      }
+    }
+  }
 }
 
 /*------------------------------------------ RESPONSIVE ------------------------------------------*/
@@ -264,9 +289,9 @@ body {
       padding: $mobile-main-padding-y $mobile-main-padding-x;
       min-width: initial;
       min-height: initial;
-      text-align: justify;
-      text-align-last: center;
+      text-align: center;
       border: none;
+      background: white;
     }
     .main-section {
       @include flex(flex-start, center, column);

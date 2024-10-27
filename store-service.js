@@ -42,6 +42,21 @@ module.exports.getAllItems = () => {
   });
 };
 
+module.exports.addItem = (itemData) => {
+  return new Promise((resolve, reject) => {
+    if ((itemData = null)) {
+      itemData.published = undefined
+        ? (itemData.published = false)
+        : (itemData.published = true);
+      itemData.id = items.length + 1;
+      items.push(itemData);
+      resolve(itemData);
+    } else {
+      reject("Item data is missing");
+    }
+  });
+};
+
 module.exports.getPublishedItems = () => {
   return new Promise((resolve, reject) => {
     const publishedItems = items.filter((item) => item.published === true);

@@ -17,11 +17,11 @@
 @keyframes pulse-text-glow {
   0% {
     color: hsl(0, 0%, 90%);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0);
+    text-shadow: 0 0 0px hsla(180, 0%, 100%, 0);
   }
   100% {
     color: white;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px hsl(180, 0%, 100%);
   }
 }
 @keyframes pulse-nav-bg {
@@ -100,7 +100,8 @@ body {
 .nav-container .nav-logo span {
   font-weight: 200;
 }
-.nav-container .nav-logo:hover {
+.nav-container .nav-logo:hover,
+.nav-container .active {
   animation: pulse-logo-glow 1s infinite alternate;
 }
 .nav-container .nav-menu-wrapper {
@@ -109,7 +110,7 @@ body {
   align-items: center;
   flex-direction: row;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   min-width: 200px;
   height: 100%;
   list-style: none;
@@ -138,9 +139,15 @@ body {
   text-transform: uppercase;
 }
 .nav-container .nav-menu-wrapper .nav-menu-item:hover {
-  animation: pulse-text-glow 1s infinite alternate,
-    pulse-nav-bg 1s infinite alternate;
+  animation: pulse-text-glow 1s infinite alternate, pulse-nav-bg 1s infinite alternate;
 }
+.nav-container .nav-menu-wrapper .active {
+  animation: pulse-text-glow 1s infinite alternate;
+}
+.nav-container .nav-menu-wrapper:hover .active:hover {
+  animation: pulse-text-glow 1s infinite alternate, pulse-nav-bg 1s infinite alternate;
+}
+
 .main-container {
   display: flex;
   justify-content: flex-start;
@@ -166,11 +173,7 @@ body {
   min-height: calc(100vh - 60px);
   padding: 4vh 2%;
   text-align: center;
-  background: linear-gradient(
-    to bottom right,
-    hsl(200, 10%, 90%),
-    hsl(210, 15%, 80%)
-  );
+  background: linear-gradient(to bottom right, hsl(200, 10%, 90%), hsl(210, 15%, 80%));
 }
 .main-container .main-aside h2 {
   font-family: "Poppins", sans-serif;
@@ -231,6 +234,30 @@ body {
   font-weight: 400;
   color: black;
 }
+.main-container .main-section-form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 80%;
+  padding: 4vh 4%;
+  text-align: left;
+}
+.main-container .main-section-form .form-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+.main-container .main-section-form .form-container fieldset {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  padding: 1vh;
+}
 
 /*------------------------------------------ RESPONSIVE ------------------------------------------*/
 @media screen and (max-width: 700px) {
@@ -262,9 +289,9 @@ body {
     padding: 4vh 8%;
     min-width: initial;
     min-height: initial;
-    text-align: justify;
-    text-align-last: center;
+    text-align: center;
     border: none;
+    background: white;
   }
   .main-container .main-section {
     display: flex;

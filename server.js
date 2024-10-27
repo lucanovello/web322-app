@@ -12,6 +12,19 @@ const path = require("path");
 const express = require("express");
 const storeService = require("./store-service.js");
 
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const streamifier = require("streamifier");
+
+cloudinary.config({
+  cloud_name: "db7hupoyf",
+  api_key: "956549261348885",
+  api_secret: "4LCe_VV55IajYlsWH5tWxLmhFYQ",
+  secure: true,
+});
+
+const upload = multer(); // no { storage: storage } since we are not using disk storage
+
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
@@ -49,6 +62,53 @@ app.get("/items", (req, res) => {
       console.error(err);
       res.json({ message: err });
     });
+});
+
+app.get("/items/add", (req, res) => {
+  res.sendFile(path.join(__dirname, "/views/addItem.html"));
+});
+
+app.post("/items/add", upload.single("featureImage"), (req, res) => {
+  if (req.file) {
+    let streamUpload = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream((error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+    async function upload(req) {
+      let result = await streamUpload(req);
+      console.log(result);
+      return result;
+    }
+    upload(req).then((uploaded) => {
+      processItem(uploaded.url);
+    });
+  } else {
+    processItem("");
+  }
+  function processItem(imageUrl) {
+    req.body.featureImage = imageUrl;
+    console.log(req.body.featureImage);
+
+    // TODO: Process the req.body and add it as a new Item before redirecting to /items
+    storeService
+      .addItem(req.body)
+      .then((item) => {
+        console.log("Item added:", item);
+        res.redirect("/items");
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json({ message: err });
+      });
+  }
 });
 
 // Categories route
