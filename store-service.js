@@ -44,16 +44,17 @@ module.exports.getAllItems = () => {
 
 module.exports.getItemsByCategory = (category) => {
   return new Promise((resolve, reject) => {
-    console.log("items:", items);
+    const categoryInt = parseInt(category);
+    const categoryItems = items.filter((item) => item.category === categoryInt);
 
-    const categoryItems = items.filter(
-      (item) => item.category === parseInt(category)
-    );
-    console.log("Category Items:", categoryItems);
+    if (!categories.find((categoryItem) => categoryItem.id == categoryInt)) {
+      reject(`Category ${category} does not exist`);
+    }
+
     if (categoryItems.length > 0) {
       resolve(categoryItems);
     } else {
-      reject(`No Items available for ${category}`);
+      reject(`No Items available for ${categoryInt}`);
     }
   });
 };

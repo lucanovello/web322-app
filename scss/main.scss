@@ -17,7 +17,7 @@ $nav-mobile-height: 80px;
 $aside-width: 15%;
 
 $mobile-main-padding-x: 8%;
-$mobile-main-padding-y: 6vh;
+$mobile-main-padding-y: 5vh;
 
 $nav-text-color: hsl(0, 0%, 90%);
 
@@ -30,8 +30,8 @@ $text-body-size: 1rem;
 
 $link-transition: 0.2s ease;
 $link-transition2: 0.4s ease-in-out;
-$link-pulse: pulse-text-glow 1s infinite alternate,
-  pulse-nav-bg 1s infinite alternate;
+$link-pulse: pulse-text-glow 0.4s infinite alternate,
+  pulse-nav-bg 0.4s infinite alternate;
 $shad-top: 2px;
 $shad-bottom: -2px;
 $shad-blur: 2px;
@@ -170,7 +170,7 @@ body {
       width: 100%;
       height: 100%;
       cursor: pointer;
-      transition: $link-transition, border $link-transition;
+      transition: $link-transition;
 
       .nav-menu-item-link {
         @include flex(center, center, row);
@@ -182,6 +182,7 @@ body {
       }
     }
     .nav-menu-item:hover {
+      background: $nav-bg-hover-color;
       animation: $link-pulse;
     }
     .active {
@@ -221,7 +222,10 @@ body {
     position: relative;
     text-align: center;
     background: $color-accent;
-    border-right: 1px dashed hsl(220, 10%, 85%);
+    border-right: 1px solid hsl(220, 10%, 85%);
+    // box-shadow: inset -3px 0 6px hsla(0, 0%, 0%, 0.1),
+    //   inset 3px 0 6px hsla(0, 0%, 0%, 0.1),
+    //   inset 0 -3px 6px hsla(0, 0%, 0%, 0.1);
 
     h2 {
       @include text-heading(2rem);
@@ -255,7 +259,6 @@ body {
     height: 100%;
     padding: 4vh 4%;
     text-align: left;
-    row-gap: 2vh;
 
     input[type="file"] {
       @include text-body(0.8rem, 400);
@@ -297,14 +300,17 @@ body {
     fieldset {
       @include flex(flex-start, flex-start, column);
       width: 100%;
+      margin-bottom: 4vh;
       padding: 2vh 2%;
       border: $border-dashed;
       border-radius: 5px;
       background: $color-accent;
-      row-gap: 2vh;
+      row-gap: 3vh;
+      box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.2);
 
       legend {
-        @include text-body(1rem, 800);
+        @include text-heading(1.1rem, 700);
+        text-transform: uppercase;
         color: #242424;
         padding: 0 0.1em;
       }
@@ -321,8 +327,9 @@ body {
 
         label {
           @include text-body(0.9rem, 600);
+          margin-bottom: 0.6vh;
+          text-transform: capitalize;
           color: #242424;
-          line-height: 1.5;
         }
 
         input,
@@ -334,6 +341,7 @@ body {
           border-radius: 5px;
           background: white;
           color: black;
+          box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.2);
           transition: 0.2s ease;
         }
 
@@ -354,14 +362,15 @@ body {
 
         .checkbox {
           @include flex(center, center, row);
+          margin-top: 0.5vh;
           color: #242424;
+          column-gap: 0.3em;
 
           label {
             margin-right: 1em;
           }
           input {
             @include flex(center, center, row);
-            margin-right: 0.1em;
             cursor: pointer;
           }
 
@@ -401,6 +410,15 @@ body {
       height: auto;
       text-align: center;
       border: none;
+      border-bottom: 1px dashed hsl(220, 10%, 85%);
+      // box-shadow: inset 0 -3px 6px hsla(0, 0%, 0%, 0.1);
+
+      h2 {
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
     }
     .main-section {
       @include flex(flex-start, center, column);
@@ -408,6 +426,15 @@ body {
       padding: $mobile-main-padding-y $mobile-main-padding-x;
       text-align: justify;
       text-align-last: center;
+    }
+
+    .main-section-form {
+      @include flex(space-between, center, column);
+      padding: auto 0;
+
+      fieldset {
+        padding: 2vh 5%;
+      }
     }
   }
 }

@@ -1,48 +1,47 @@
 /*********************************************************************************
-WEB322 – Assignment 02
+WEB322 – Assignment 03
 I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part * of this assignment has
 been copied manually or electronically from any other source (including 3rd party web sites) or distributed to other students.
 Name:                   Luca Novello
 Student ID:             038515003
-Date:                   10-08-2024
+Date:                   10-28-2024
 Vercel Web App URL:     https://web322app-lucanovello.vercel.app/
 GitHub Repository URL:  https://github.com/lucanovello/web322-app
 ********************************************************************************/
 const path = require("path");
 const express = require("express");
 const storeService = require("./store-service.js");
-
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 
+require("dotenv").config();
+
 cloudinary.config({
-  cloud_name: "db7hupoyf",
-  api_key: "956549261348885",
-  api_secret: "4LCe_VV55IajYlsWH5tWxLmhFYQ",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
   secure: true,
 });
 
 const upload = multer(); // no { storage: storage } since we are not using disk storage
-
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
-
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "/views"));
 
 // ROUTES
-// Home route
+// Home routes
 app.get("/", (req, res) => {
   res.redirect("/about");
 });
 
-// About route
+// About routes
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "/views/about.html"));
 });
 
-// Shop route
+// Shop routes
 app.get("/shop", (req, res) => {
   storeService
     .getPublishedItems()
@@ -53,7 +52,7 @@ app.get("/shop", (req, res) => {
     });
 });
 
-// Items route
+// Items routes
 app.get("/items", (req, res) => {
   if (req.query.category) {
     storeService
@@ -136,7 +135,7 @@ app.get("/items/:id", (req, res) => {
     });
 });
 
-// Categories route
+// Categories routes
 app.get("/categories", (req, res) => {
   storeService
     .getCategories()
