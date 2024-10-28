@@ -55,13 +55,31 @@ app.get("/shop", (req, res) => {
 
 // Items route
 app.get("/items", (req, res) => {
-  storeService
-    .getAllItems()
-    .then((items) => res.json(items))
-    .catch((err) => {
-      console.error(err);
-      res.json({ message: err });
-    });
+  if (req.query.category) {
+    storeService
+      .getItemsByCategory(req.query.category)
+      .then((items) => res.json(items))
+      .catch((err) => {
+        console.error(err);
+        res.json({ message: err });
+      });
+  } else if (req.query.minDate) {
+    storeService
+      .getItemsByMinDate(req.query.minDate)
+      .then((items) => res.json(items))
+      .catch((err) => {
+        console.error(err);
+        res.json({ message: err });
+      });
+  } else {
+    storeService
+      .getAllItems()
+      .then((items) => res.json(items))
+      .catch((err) => {
+        console.error(err);
+        res.json({ message: err });
+      });
+  }
 });
 
 app.get("/items/add", (req, res) => {
@@ -84,7 +102,6 @@ app.post("/items/add", upload.single("featureImage"), (req, res) => {
     };
     async function upload(req) {
       let result = await streamUpload(req);
-      console.log(result);
       return result;
     }
     upload(req).then((uploaded) => {
@@ -95,13 +112,11 @@ app.post("/items/add", upload.single("featureImage"), (req, res) => {
   }
   function processItem(imageUrl) {
     req.body.featureImage = imageUrl;
-    console.log(req.body.featureImage);
 
     // TODO: Process the req.body and add it as a new Item before redirecting to /items
     storeService
       .addItem(req.body)
       .then((item) => {
-        console.log("Item added:", item);
         res.redirect("/items");
       })
       .catch((err) => {
@@ -109,6 +124,16 @@ app.post("/items/add", upload.single("featureImage"), (req, res) => {
         res.json({ message: err });
       });
   }
+});
+
+app.get("/items/:id", (req, res) => {
+  storeService
+    .getItemById(req.params.id)
+    .then((item) => res.json(item))
+    .catch((err) => {
+      console.error(err);
+      res.json({ message: err });
+    });
 });
 
 // Categories route

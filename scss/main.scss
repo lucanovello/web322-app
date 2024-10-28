@@ -6,17 +6,23 @@
 
 /*------------------------------------------ VARIABLES ------------------------------------------*/
 $nav-bg-color: hsl(220, 50%, 10%);
-$nav-bg-hover-color: hsl(220, 30%, 30%);
+$nav-bg-hover-color: hsl(220, 50%, 20%);
+$nav-bg-active-color: hsl(220, 30%, 35%);
+
+$color-accent: hsl(220, 50%, 95%);
 
 $nav-height: 60px;
 $nav-mobile-height: 80px;
 
+$aside-width: 15%;
+
 $mobile-main-padding-x: 8%;
-$mobile-main-padding-y: 4vh;
+$mobile-main-padding-y: 6vh;
 
 $nav-text-color: hsl(0, 0%, 90%);
 
-$border-dashed: 1px dashed hsla(0, 0%, 100%, 0.7);
+$border-dashed: 1px dashed $nav-bg-color;
+$border-solid: 1px solid $nav-bg-color;
 
 $text-logo-size: 1.2rem;
 $text-heading-size: 2.5rem;
@@ -26,6 +32,9 @@ $link-transition: 0.2s ease;
 $link-transition2: 0.4s ease-in-out;
 $link-pulse: pulse-text-glow 1s infinite alternate,
   pulse-nav-bg 1s infinite alternate;
+$shad-top: 2px;
+$shad-bottom: -2px;
+$shad-blur: 2px;
 
 /*------------------------------------------ ANIMATIONS ------------------------------------------*/
 @keyframes pulse-logo-glow {
@@ -80,10 +89,10 @@ $link-pulse: pulse-text-glow 1s infinite alternate,
   font-weight: $weight;
   text-transform: uppercase;
 }
-@mixin text-body($size: 1rem) {
+@mixin text-body($size: 1rem, $weight: 400) {
   font-family: "Inter", sans-serif;
   font-size: $size;
-  font-weight: 400;
+  font-weight: $weight;
 }
 
 /*------------------------------------------ STYLES ------------------------------------------*/
@@ -126,8 +135,8 @@ body {
   right: 0;
   color: $nav-text-color;
   background: $nav-bg-color;
-  // border-bottom: 1px solid white;
-  // box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px dashed white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: 0.2s ease;
   z-index: 9;
 
@@ -179,9 +188,7 @@ body {
       animation: pulse-text-glow 1s infinite alternate;
     }
   }
-  // .nav-menu-wrapper:hover .active {
-  //   animation: none;
-  // }
+
   .nav-menu-wrapper:hover .active:hover {
     animation: $link-pulse;
   }
@@ -190,7 +197,14 @@ body {
 .main-container {
   @include flex(flex-start, flex-start, row);
   width: 100%;
-
+  min-height: calc(100vh - #{$nav-height});
+  position: relative;
+  h2 {
+    @include text-heading();
+    margin-bottom: 2vh;
+    color: black;
+    line-height: 1;
+  }
   p {
     @include text-body();
     margin-bottom: 2vh;
@@ -200,16 +214,15 @@ body {
 
   .main-aside {
     @include flex(flex-start, center, column);
-    width: 15%;
+    width: $aside-width;
     min-width: 200px;
-    min-height: calc(100vh - #{$nav-height});
+    height: calc(100vh - #{$nav-height});
     padding: 4vh 2%;
+    position: relative;
     text-align: center;
-    background: linear-gradient(
-      to bottom right,
-      hsl(200, 10%, 90%),
-      hsl(210, 15%, 80%)
-    );
+    background: $color-accent;
+    border-right: 1px dashed hsl(220, 10%, 85%);
+
     h2 {
       @include text-heading(2rem);
       margin-bottom: 1vh;
@@ -219,48 +232,144 @@ body {
   }
   .main-section {
     @include flex(flex-start, flex-start, column);
-    width: 80%;
+    width: calc(100% - #{$aside-width});
     padding: 4vh 4%;
     text-align: justify;
-    h2 {
-      @include text-heading();
-      margin-bottom: 2vh;
-      color: black;
-      line-height: 1;
-    }
   }
   .main-section-error {
-    @include flex(center, center, column);
-    width: 80%;
+    @include flex(flex-start, flex-start, column);
+    width: calc(100% - #{$aside-width});
     padding: 4vh 4%;
-    text-align: center;
-    h2 {
-      @include flex(flex-start, center, row);
-      @include text-heading(4rem);
-      margin-bottom: 2vh;
-      color: black;
-      line-height: 1;
-    }
+    text-align: left;
+
     p {
       @include flex(flex-start, center, row);
-      @include text-body(1.5rem);
+      @include text-body(1.5rem, 400);
       color: black;
     }
   }
 
   .main-section-form {
-    @include flex(flex-start, flex-start, column);
-    width: 80%;
+    @include flex(space-between, flex-start, column);
+    width: calc(100% - #{$aside-width});
+    height: 100%;
     padding: 4vh 4%;
     text-align: left;
+    row-gap: 2vh;
 
-    .form-container {
+    input[type="file"] {
+      @include text-body(0.8rem, 400);
+    }
+
+    input::file-selector-button,
+    .form-btn {
+      @include text-body(1rem, 800);
+      margin-right: 1em;
+      padding: 0.5em 1.5em;
+      border: none;
+      border-radius: 5px;
+      background: $nav-bg-color;
+      color: $nav-text-color;
+      box-shadow: inset $shad-top $shad-top $shad-blur hsla(0, 0%, 100%, 0.2),
+        inset $shad-bottom $shad-bottom $shad-blur hsla(0, 0%, 0%, 0.6);
+      cursor: pointer;
+      transition: 0.05s ease;
+    }
+    .form-btn {
+      padding: 1em 3em;
+    }
+
+    input:hover::file-selector-button,
+    .form-btn:hover {
+      color: white;
+      background: $nav-bg-hover-color;
+    }
+
+    input:active::file-selector-button,
+    .form-btn:active {
+      color: white;
+      background: $nav-bg-active-color;
+      box-shadow: inset $shad-top $shad-top $shad-top hsla(0, 0%, 0%, 0.6),
+        inset $shad-bottom $shad-bottom $shad-top hsla(0, 0%, 100%, 0.2);
+      transition: none;
+    }
+
+    fieldset {
       @include flex(flex-start, flex-start, column);
       width: 100%;
-      fieldset {
+      padding: 2vh 2%;
+      border: $border-dashed;
+      border-radius: 5px;
+      background: $color-accent;
+      row-gap: 2vh;
+
+      legend {
+        @include text-body(1rem, 800);
+        color: #242424;
+        padding: 0 0.1em;
+      }
+
+      .column {
         @include flex(flex-start, flex-start, column);
+      }
+      .row {
+        @include flex(flex-start, center, row);
+      }
+      .column,
+      .row {
         width: 100%;
-        padding: 1vh;
+
+        label {
+          @include text-body(0.9rem, 600);
+          color: #242424;
+          line-height: 1.5;
+        }
+
+        input,
+        textarea {
+          @include text-body(0.8rem, 400);
+          width: 100%;
+          padding: 1vh 1%;
+          border: $border-dashed;
+          border-radius: 5px;
+          background: white;
+          color: black;
+          transition: 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+          border: $border-solid;
+        }
+
+        select {
+          width: 100%;
+          padding: 1vh 1%;
+          border: $border-dashed;
+          border-radius: 5px;
+          background: white;
+          color: black;
+          transition: 0.2s ease;
+        }
+
+        .checkbox {
+          @include flex(center, center, row);
+          color: #242424;
+
+          label {
+            margin-right: 1em;
+          }
+          input {
+            @include flex(center, center, row);
+            margin-right: 0.1em;
+            cursor: pointer;
+          }
+
+          p {
+            @include text-body(0.8rem, 400);
+            margin: 0;
+          }
+        }
       }
     }
   }
@@ -279,7 +388,7 @@ body {
     }
   }
   .main-container {
-    @include flex(flex-start, center, column-reverse);
+    @include flex(flex-start, center, column);
     text-align: center;
     h2 {
       @include text-heading();
@@ -289,9 +398,9 @@ body {
       padding: $mobile-main-padding-y $mobile-main-padding-x;
       min-width: initial;
       min-height: initial;
+      height: auto;
       text-align: center;
       border: none;
-      background: white;
     }
     .main-section {
       @include flex(flex-start, center, column);
