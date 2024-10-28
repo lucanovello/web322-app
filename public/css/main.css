@@ -32,6 +32,116 @@
     background: hsl(220, 50%, 20%);
   }
 }
+@keyframes pulse-footer-link {
+  0% {
+    color: hsl(0, 0%, 70%);
+  }
+  100% {
+    color: white;
+  }
+}
+@keyframes sos {
+  0% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  2% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  5% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  7% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  10% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  12% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  15% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  17% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  21% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  36% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  38% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  39% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  54% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  56% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  57% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  72% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  74% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  76% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  78% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  81% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  83% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  86% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  88% {
+    color: #e6e6e6;
+    text-shadow: 0 0 5px #ffffff;
+  }
+  91% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+  100% {
+    color: #8a8a8a;
+    text-shadow: 0 0 1px #b8b8b8;
+  }
+}
 /*------------------------------------------ MIXINS ------------------------------------------*/
 /*------------------------------------------ STYLES ------------------------------------------*/
 /**************Reset**************/
@@ -59,21 +169,19 @@ body {
   align-items: flex-start;
   flex-direction: column;
   font-family: "Inter", sans-serif;
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 400;
   width: 100%;
   min-width: 260px;
-  min-height: 100vh;
+  height: 100vh;
   background: white;
 }
-
-.nav-container {
+body .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
   width: 100%;
-  height: 60px;
   padding: 0 5%;
   position: sticky;
   top: 0;
@@ -86,7 +194,7 @@ body {
   transition: 0.2s ease;
   z-index: 9;
 }
-.nav-container .nav-logo {
+body .nav-container .nav-logo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,14 +207,14 @@ body {
   line-height: 1;
   transition: 0.2s ease;
 }
-.nav-container .nav-logo span {
+body .nav-container .nav-logo span {
   font-weight: 200;
 }
-.nav-container .nav-logo:hover,
-.nav-container .active {
+body .nav-container .nav-logo:hover,
+body .nav-container .active {
   animation: pulse-logo-glow 1s infinite alternate;
 }
-.nav-container .nav-menu-wrapper {
+body .nav-container .nav-menu-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -114,10 +222,9 @@ body {
   width: 100%;
   max-width: 700px;
   min-width: 200px;
-  height: 100%;
   list-style: none;
 }
-.nav-container .nav-menu-wrapper .nav-menu-item {
+body .nav-container .nav-menu-wrapper .nav-menu-item {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,7 +234,7 @@ body {
   cursor: pointer;
   transition: 0.2s ease;
 }
-.nav-container .nav-menu-wrapper .nav-menu-item .nav-menu-item-link {
+body .nav-container .nav-menu-wrapper .nav-menu-item .nav-menu-item-link {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,30 +244,30 @@ body {
   font-weight: 300;
   width: 100%;
   height: 100%;
+  padding: 1.618vh 0;
   text-decoration: none;
   text-transform: uppercase;
 }
-.nav-container .nav-menu-wrapper .nav-menu-item:hover {
+body .nav-container .nav-menu-wrapper .nav-menu-item:hover {
   background: hsl(220, 50%, 20%);
   animation: pulse-text-glow 0.4s infinite alternate, pulse-nav-bg 0.4s infinite alternate;
 }
-.nav-container .nav-menu-wrapper .active {
+body .nav-container .nav-menu-wrapper .active {
   animation: pulse-text-glow 1s infinite alternate;
 }
-.nav-container .nav-menu-wrapper:hover .active:hover {
+body .nav-container .nav-menu-wrapper:hover .active:hover {
   animation: pulse-text-glow 0.4s infinite alternate, pulse-nav-bg 0.4s infinite alternate;
 }
-
-.main-container {
+body .main-container {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: row;
   width: 100%;
-  min-height: calc(100vh - 60px);
+  height: 100%;
   position: relative;
 }
-.main-container h2 {
+body .main-container h2 {
   font-family: "Poppins", sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
@@ -169,7 +276,7 @@ body {
   color: black;
   line-height: 1;
 }
-.main-container p {
+body .main-container p {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -177,21 +284,21 @@ body {
   line-height: 1.5;
   color: #242424;
 }
-.main-container .main-aside {
+body .main-container .main-aside {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   width: 15%;
   min-width: 200px;
-  height: calc(100vh - 60px);
+  height: 100%;
   padding: 4vh 2%;
   position: relative;
   text-align: center;
   background: hsl(220, 50%, 95%);
   border-right: 1px solid hsl(220, 10%, 85%);
 }
-.main-container .main-aside h2 {
+body .main-container .main-aside h2 {
   font-family: "Poppins", sans-serif;
   font-size: 2rem;
   font-weight: 900;
@@ -200,25 +307,27 @@ body {
   color: black;
   line-height: 1;
 }
-.main-container .main-section {
+body .main-container .main-section {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
   width: calc(100% - 15%);
+  height: 100%;
   padding: 4vh 4%;
   text-align: justify;
 }
-.main-container .main-section-error {
+body .main-container .main-section-error {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
   width: calc(100% - 15%);
+  height: 100%;
   padding: 4vh 4%;
   text-align: left;
 }
-.main-container .main-section-error p {
+body .main-container .main-section-error p {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -228,7 +337,7 @@ body {
   font-weight: 400;
   color: black;
 }
-.main-container .main-section-form {
+body .main-container .main-section-form {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -238,13 +347,13 @@ body {
   padding: 4vh 4%;
   text-align: left;
 }
-.main-container .main-section-form input[type=file] {
+body .main-container .main-section-form input[type=file] {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
 }
-.main-container .main-section-form input::file-selector-button,
-.main-container .main-section-form .form-btn {
+body .main-container .main-section-form input::file-selector-button,
+body .main-container .main-section-form .form-btn {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 800;
@@ -258,22 +367,22 @@ body {
   cursor: pointer;
   transition: 0.05s ease;
 }
-.main-container .main-section-form .form-btn {
+body .main-container .main-section-form .form-btn {
   padding: 1em 3em;
 }
-.main-container .main-section-form input:hover::file-selector-button,
-.main-container .main-section-form .form-btn:hover {
+body .main-container .main-section-form input:hover::file-selector-button,
+body .main-container .main-section-form .form-btn:hover {
   color: white;
   background: hsl(220, 50%, 20%);
 }
-.main-container .main-section-form input:active::file-selector-button,
-.main-container .main-section-form .form-btn:active {
+body .main-container .main-section-form input:active::file-selector-button,
+body .main-container .main-section-form .form-btn:active {
   color: white;
   background: hsl(220, 30%, 35%);
   box-shadow: inset 2px 2px 2px hsla(0, 0%, 0%, 0.6), inset -2px -2px 2px hsla(0, 0%, 100%, 0.2);
   transition: none;
 }
-.main-container .main-section-form fieldset {
+body .main-container .main-section-form fieldset {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -287,7 +396,7 @@ body {
   row-gap: 3vh;
   box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.2);
 }
-.main-container .main-section-form fieldset legend {
+body .main-container .main-section-form fieldset legend {
   font-family: "Poppins", sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
@@ -296,24 +405,24 @@ body {
   color: #242424;
   padding: 0 0.1em;
 }
-.main-container .main-section-form fieldset .column {
+body .main-container .main-section-form fieldset .column {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
 }
-.main-container .main-section-form fieldset .row {
+body .main-container .main-section-form fieldset .row {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 }
-.main-container .main-section-form fieldset .column,
-.main-container .main-section-form fieldset .row {
+body .main-container .main-section-form fieldset .column,
+body .main-container .main-section-form fieldset .row {
   width: 100%;
 }
-.main-container .main-section-form fieldset .column label,
-.main-container .main-section-form fieldset .row label {
+body .main-container .main-section-form fieldset .column label,
+body .main-container .main-section-form fieldset .row label {
   font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
@@ -321,10 +430,10 @@ body {
   text-transform: capitalize;
   color: #242424;
 }
-.main-container .main-section-form fieldset .column input,
-.main-container .main-section-form fieldset .column textarea,
-.main-container .main-section-form fieldset .row input,
-.main-container .main-section-form fieldset .row textarea {
+body .main-container .main-section-form fieldset .column input,
+body .main-container .main-section-form fieldset .column textarea,
+body .main-container .main-section-form fieldset .row input,
+body .main-container .main-section-form fieldset .row textarea {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
@@ -337,14 +446,14 @@ body {
   box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.2);
   transition: 0.2s ease;
 }
-.main-container .main-section-form fieldset .column input:focus,
-.main-container .main-section-form fieldset .column textarea:focus,
-.main-container .main-section-form fieldset .row input:focus,
-.main-container .main-section-form fieldset .row textarea:focus {
+body .main-container .main-section-form fieldset .column input:focus,
+body .main-container .main-section-form fieldset .column textarea:focus,
+body .main-container .main-section-form fieldset .row input:focus,
+body .main-container .main-section-form fieldset .row textarea:focus {
   border: 1px solid hsl(220, 50%, 10%);
 }
-.main-container .main-section-form fieldset .column select,
-.main-container .main-section-form fieldset .row select {
+body .main-container .main-section-form fieldset .column select,
+body .main-container .main-section-form fieldset .row select {
   width: 100%;
   padding: 1vh 1%;
   border: 1px dashed hsl(220, 50%, 10%);
@@ -353,8 +462,8 @@ body {
   color: black;
   transition: 0.2s ease;
 }
-.main-container .main-section-form fieldset .column .checkbox,
-.main-container .main-section-form fieldset .row .checkbox {
+body .main-container .main-section-form fieldset .column .checkbox,
+body .main-container .main-section-form fieldset .row .checkbox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -363,24 +472,80 @@ body {
   color: #242424;
   column-gap: 0.3em;
 }
-.main-container .main-section-form fieldset .column .checkbox label,
-.main-container .main-section-form fieldset .row .checkbox label {
+body .main-container .main-section-form fieldset .column .checkbox label,
+body .main-container .main-section-form fieldset .row .checkbox label {
   margin-right: 1em;
 }
-.main-container .main-section-form fieldset .column .checkbox input,
-.main-container .main-section-form fieldset .row .checkbox input {
+body .main-container .main-section-form fieldset .column .checkbox input,
+body .main-container .main-section-form fieldset .row .checkbox input {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   cursor: pointer;
 }
-.main-container .main-section-form fieldset .column .checkbox p,
-.main-container .main-section-form fieldset .row .checkbox p {
+body .main-container .main-section-form fieldset .column .checkbox p,
+body .main-container .main-section-form fieldset .row .checkbox p {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
   margin: 0;
+}
+body footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 1vh 5%;
+  color: hsl(0, 0%, 90%);
+  background: hsl(220, 50%, 10%);
+  row-gap: 1vh;
+}
+body footer .footer-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  column-gap: 1em;
+}
+body footer .footer-icon-wrapper a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 1.25em;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+body footer .footer-icon-wrapper a svg {
+  width: 100%;
+  cursor: pointer;
+  fill: hsl(0, 0%, 70%);
+  transition: 0.2s ease;
+}
+body footer .footer-icon-wrapper a svg:hover {
+  fill: white;
+  transform: translateY(-2px);
+}
+body footer .footer-icon-wrapper a:hover svg {
+  fill: white;
+  transform: translateY(-2px);
+}
+body footer p {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: hsl(0, 0%, 70%);
+}
+body footer p a {
+  color: hsl(0, 0%, 70%);
+  transition: 0.2s ease;
+  animation: sos 7s infinite;
+}
+body footer p a:hover {
+  color: white;
 }
 
 /*------------------------------------------ RESPONSIVE ------------------------------------------*/
