@@ -11,8 +11,10 @@ $nav-bg-active-color: hsl(220, 30%, 35%);
 
 $color-accent: hsl(220, 50%, 95%);
 
-$nav-height: 60px;
+$nav-height: 50px;
 $nav-mobile-height: 80px;
+
+$main-container-padding-top: calc($nav-height);
 
 $aside-width: 15%;
 
@@ -227,7 +229,7 @@ html {
 
 /**************Custom**************/
 body {
-  @include flex(flex-start, flex-start, column);
+  @include flex(stretch, flex-start, column);
   @include text-body(15px, 400);
   width: 100%;
   min-width: 260px;
@@ -237,8 +239,9 @@ body {
   .nav-container {
     @include flex(space-between, center, row);
     width: 100%;
+    height: $nav-height;
     padding: 0 5%;
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -307,8 +310,8 @@ body {
   .main-container {
     @include flex(flex-start, stretch, row);
     width: 100%;
-    height: 100%;
-    position: relative;
+    padding-top: calc($nav-height);
+    flex: 1;
     h2 {
       @include text-heading();
       margin-bottom: 2vh;
@@ -326,7 +329,7 @@ body {
       @include flex(flex-start, center, column);
       width: $aside-width;
       min-width: 200px;
-      padding: 4vh 2%;
+      padding: $main-container-padding-top 2%;
       text-align: center;
       background: $color-accent;
       border-right: 1px solid hsl(220, 10%, 85%);
@@ -344,15 +347,13 @@ body {
     .main-section {
       @include flex(flex-start, flex-start, column);
       width: calc(100% - #{$aside-width});
-      height: 100%;
-      padding: 4vh 4%;
+      padding: $main-container-padding-top 4%;
       text-align: justify;
     }
     .main-section-error {
       @include flex(flex-start, flex-start, column);
       width: calc(100% - #{$aside-width});
-      height: 100%;
-      padding: 4vh 4%;
+      padding: $main-container-padding-top 4%;
       text-align: left;
 
       p {
@@ -365,8 +366,7 @@ body {
     .main-section-form {
       @include flex(space-between, flex-start, column);
       width: calc(100% - #{$aside-width});
-      height: 100%;
-      padding: 4vh 4%;
+      padding: $main-container-padding-top 4%;
       text-align: left;
 
       input[type="file"] {
