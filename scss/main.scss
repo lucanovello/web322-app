@@ -231,7 +231,7 @@ body {
   @include text-body(15px, 400);
   width: 100%;
   min-width: 260px;
-  height: 100vh;
+  min-height: 100vh;
   background: white;
 
   .nav-container {
@@ -305,7 +305,7 @@ body {
   }
 
   .main-container {
-    @include flex(flex-start, flex-start, row);
+    @include flex(flex-start, stretch, row);
     width: 100%;
     height: 100%;
     position: relative;
@@ -326,9 +326,7 @@ body {
       @include flex(flex-start, center, column);
       width: $aside-width;
       min-width: 200px;
-      height: 100%;
       padding: 4vh 2%;
-      position: relative;
       text-align: center;
       background: $color-accent;
       border-right: 1px solid hsl(220, 10%, 85%);
