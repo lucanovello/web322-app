@@ -9,6 +9,10 @@ $nav-bg-color: hsl(220, 50%, 10%);
 $nav-bg-hover-color: hsl(220, 50%, 20%);
 $nav-bg-active-color: hsl(220, 30%, 35%);
 
+$nav-bg-hover-hue: 220;
+$nav-bg-hover-sat: 50%;
+$nav-bg-hover-bri: 20%;
+
 $color-accent: hsl(220, 50%, 95%);
 
 $nav-height: 50px;
@@ -61,10 +65,81 @@ $shad-blur: 2px;
 }
 @keyframes pulse-nav-bg {
   0% {
-    background: $nav-bg-color;
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0),
+      transparent
+    );
+  }
+  10% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.1),
+      transparent
+    );
+  }
+  20% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.2),
+      transparent
+    );
+  }
+  30% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.3),
+      transparent
+    );
+  }
+  40% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.4),
+      transparent
+    );
+  }
+  50% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.5),
+      transparent
+    );
+  }
+  60% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.6),
+      transparent
+    );
+  }
+  70% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.7),
+      transparent
+    );
+  }
+  80% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.8),
+      transparent
+    );
+  }
+  90% {
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 0.9),
+      transparent
+    );
   }
   100% {
-    background: $nav-bg-hover-color;
+    background: linear-gradient(
+      to bottom,
+      hsla($nav-bg-hover-hue, $nav-bg-hover-sat, $nav-bg-hover-bri, 1),
+      transparent
+    );
   }
 }
 @keyframes pulse-footer-link {
@@ -223,6 +298,15 @@ a {
   color: inherit;
 }
 
+hr {
+  margin: 0.5vh 0 1vh;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $nav-text-color;
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
 html {
   font-size: 15px;
 }
@@ -261,6 +345,9 @@ body {
       span {
         font-weight: 200;
       }
+      p {
+        margin: 0;
+      }
       transition: $link-transition;
     }
 
@@ -274,6 +361,7 @@ body {
       width: 100%;
       max-width: 700px;
       min-width: 200px;
+      margin: 0;
       list-style: none;
 
       .nav-menu-item {
@@ -314,7 +402,7 @@ body {
     flex: 1;
     h2 {
       @include text-heading();
-      margin-bottom: 2vh;
+      margin-bottom: 1.5vh;
       color: black;
       line-height: 1;
     }

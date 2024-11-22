@@ -86,9 +86,11 @@ module.exports.getItemById = (id) => {
 module.exports.addItem = (itemData) => {
   return new Promise((resolve, reject) => {
     if (itemData != null) {
-      itemData.published = undefined
-        ? (itemData.published = false)
-        : (itemData.published = true);
+      itemData.published =
+        itemData.published === undefined ? false : itemData.published;
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString().split("T")[0];
+      itemData.postDate = formattedDate;
       itemData.id = items.length + 1;
       items.push(itemData);
       resolve(itemData);
@@ -105,6 +107,19 @@ module.exports.getPublishedItems = () => {
       resolve(publishedItems);
     } else {
       reject("No Shop Items available");
+    }
+  });
+};
+
+module.exports.getPublishedItemsByCategory = (category) => {
+  return new Promise((resolve, reject) => {
+    const publishedItems = items.filter(
+      (item) => item.published == true && item.category == category
+    );
+    if (publishedItems.length > 0) {
+      resolve(publishedItems);
+    } else {
+      reject(`No Shop Items available in category ${category}`);
     }
   });
 };

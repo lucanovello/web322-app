@@ -1,20 +1,25 @@
 /*********************************************************************************
-WEB322 – Assignment 03
-I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part * of this assignment has
-been copied manually or electronically from any other source (including 3rd party web sites) or distributed to other students.
+WEB322 – Assignment 04
+I declare that this assignment is my own work in accordance with Seneca Academic Policy. 
+No part of this assignment has been copied manually or electronically from any other source 
+(including 3rd party web sites) or distributed to other students. I acknowledge that violation
+of this policy to any degree results in a ZERO for this assignment and possible failure of 
+the course.
+
 Name:                   Luca Novello
 Student ID:             038515003
-Date:                   10-28-2024
+Date:                   11-21-2024
 Vercel Web App URL:     https://web322app-lucanovello.vercel.app/
 GitHub Repository URL:  https://github.com/lucanovello/web322-app
 ********************************************************************************/
 const path = require("path");
 const express = require("express");
-const storeService = require("./store-service.js");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
-
+const exphbs = require("express-handlebars");
+const Handlebars = require("handlebars");
+const storeService = require("./store-service.js");
 require("dotenv").config();
 
 cloudinary.config({
@@ -24,104 +29,231 @@ cloudinary.config({
   secure: true,
 });
 
-const upload = multer(); // no { storage: storage } since we are not using disk storage
+const upload = multer();
+
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
+
+const hbs = exphbs.create({
+  extname: ".hbs",
+  helpers: {
+    navLink: function (url, options) {
+      const activeClass =
+        url == app.locals.activeRoute
+          ? "nav-menu-item active"
+          : "nav-menu-item";
+      return `<li class="${activeClass}">
+                <a class="nav-menu-item-link" href="${url}">${options.fn(
+        this
+      )}</a>
+              </li>`;
+    },
+    equal: function (lvalue, rvalue, options) {
+      if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+      if (lvalue != rvalue) {
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    },
+    safeHTML: function (html) {
+      return new Handlebars.SafeString(html);
+    },
+  },
+});
+
 app.use(express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "/views"));
 
-// ROUTES
-// Home routes
+app.engine(".hbs", hbs.engine);
+app.set("view engine", ".hbs");
+
+app.use(function (req, res, next) {
+  let route = req.path.substring(1);
+  app.locals.activeRoute =
+    "/" +
+    (isNaN(route.split("/")[1])
+      ? route.replace(/\/(?!.*)/, "")
+      : route.replace(/\/(.*)/, ""));
+  app.locals.viewingCategory = req.query.category;
+  next();
+});
+
+// Routes //////////////////////////////////////////////////////////////
+// Home route
 app.get("/", (req, res) => {
-  res.redirect("/about");
+  res.redirect("/shop");
 });
 
-// About routes
+// About route
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/about.html"));
+  res.render("about");
 });
 
-// Shop routes
-app.get("/shop", (req, res) => {
-  storeService
-    .getPublishedItems()
-    .then((pubItems) => res.json(pubItems))
-    .catch((err) => {
-      console.error(err);
-      res.json({ message: err });
-    });
+// Shop route
+
+app.get("/shop/:id", async (req, res) => {
+  // Declare an object to store properties for the view
+  let viewData = {};
+
+  try {
+    // declare empty array to hold "item" objects
+    let items = [];
+
+    // if there's a "category" query, filter the returned items by category
+    if (req.query.category) {
+      // Obtain the published "items" by category
+      items = await storeService.getPublishedItemsByCategory(
+        req.query.category
+      );
+    } else {
+      // Obtain the published "items"
+      items = await storeService.getPublishedItems();
+    }
+
+    // sort the published items by itemDate
+    items.sort((a, b) => new Date(b.itemDate) - new Date(a.itemDate));
+
+    // store the "items" and "item" data in the viewData object (to be passed to the view)
+    viewData.items = items;
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the item by "id"
+    viewData.item = await storeService.getItemById(req.params.id);
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the full list of "categories"
+    let categories = await storeService.getCategories();
+
+    // store the "categories" data in the viewData object (to be passed to the view)
+    viewData.categories = categories;
+  } catch (err) {
+    viewData.categoriesMessage = "no results";
+  }
+
+  // render the "shop" view with all of the data (viewData)
+  res.render("shop", { data: viewData });
+});
+
+app.get("/shop", async (req, res) => {
+  // Declare an object to store properties for the view
+  let viewData = {};
+
+  try {
+    // declare empty array to hold "item" objects
+    let items = [];
+
+    // if there's a "category" query, filter the returned items by category
+    if (req.query.category) {
+      // Obtain the published "item" by category
+      items = await storeService.getPublishedItemsByCategory(
+        req.query.category
+      );
+    } else {
+      // Obtain the published "items"
+      items = await storeService.getPublishedItems();
+    }
+
+    // sort the published items by itemDate
+    items.sort((a, b) => new Date(b.itemDate) - new Date(a.itemDate));
+
+    // get the latest item from the front of the list (element 0)
+    let item = items[0];
+
+    // store the "items" and "item" data in the viewData object (to be passed to the view)
+    viewData.items = items;
+    viewData.item = item;
+  } catch (err) {
+    viewData.message = "no results";
+  }
+
+  try {
+    // Obtain the full list of "categories"
+    let categories = await storeService.getCategories();
+
+    // store the "categories" data in the viewData object (to be passed to the view)
+    viewData.categories = categories;
+  } catch (err) {
+    viewData.categoriesMessage = "no results";
+  }
+
+  // render the "shop" view with all of the data (viewData)
+  res.render("shop", { data: viewData });
 });
 
 // Items routes
 app.get("/items", (req, res) => {
-  if (req.query.category) {
+  const { category, minDate } = req.query;
+
+  if (category) {
     storeService
-      .getItemsByCategory(req.query.category)
-      .then((items) => res.json(items))
+      .getItemsByCategory(category)
+      .then((items) => res.render("items", { items: items }))
       .catch((err) => {
         console.error(err);
-        res.json({ message: err });
+        res.render("posts", { message: "Unable to fetch items by category" });
       });
-  } else if (req.query.minDate) {
+  } else if (minDate) {
     storeService
-      .getItemsByMinDate(req.query.minDate)
-      .then((items) => res.json(items))
+      .getItemsByMinDate(minDate)
+      .then((items) => res.render("items", { items: items }))
       .catch((err) => {
         console.error(err);
-        res.json({ message: err });
+        res.render("posts", { message: "Unable to fetch items by date" });
       });
   } else {
     storeService
       .getAllItems()
-      .then((items) => res.json(items))
+      .then((items) => res.render("items", { items: items }))
       .catch((err) => {
         console.error(err);
-        res.json({ message: err });
+        res.render("posts", { message: "Unable to fetch items by items" });
       });
   }
 });
 
 app.get("/items/add", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/addItem.html"));
+  res.render("addItem");
 });
 
 app.post("/items/add", upload.single("featureImage"), (req, res) => {
+  const processItem = (imageUrl) => {
+    req.body.featureImage = imageUrl;
+
+    storeService
+      .addItem(req.body)
+      .then(() => res.redirect("/items"))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: "Unable to add item." });
+      });
+  };
+
   if (req.file) {
-    let streamUpload = (req) => {
+    const streamUpload = (req) => {
       return new Promise((resolve, reject) => {
-        let stream = cloudinary.uploader.upload_stream((error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(error);
-          }
+        const stream = cloudinary.uploader.upload_stream((error, result) => {
+          if (result) resolve(result);
+          else reject(error);
         });
         streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
     };
-    async function upload(req) {
-      let result = await streamUpload(req);
-      return result;
-    }
-    upload(req).then((uploaded) => {
-      processItem(uploaded.url);
-    });
-  } else {
-    processItem("");
-  }
-  function processItem(imageUrl) {
-    req.body.featureImage = imageUrl;
 
-    // TODO: Process the req.body and add it as a new Item before redirecting to /items
-    storeService
-      .addItem(req.body)
-      .then((item) => {
-        res.redirect("/items");
-      })
+    streamUpload(req)
+      .then((uploaded) => processItem(uploaded.url))
       .catch((err) => {
         console.error(err);
-        res.json({ message: err });
+        res.status(500).json({ message: "Unable to upload image." });
       });
+  } else {
+    processItem("");
   }
 });
 
@@ -131,7 +263,7 @@ app.get("/items/:id", (req, res) => {
     .then((item) => res.json(item))
     .catch((err) => {
       console.error(err);
-      res.json({ message: err });
+      res.status(500).json({ message: "Unable to fetch item by ID." });
     });
 });
 
@@ -139,32 +271,27 @@ app.get("/items/:id", (req, res) => {
 app.get("/categories", (req, res) => {
   storeService
     .getCategories()
-    .then((categories) => res.json(categories))
+    .then((categories) => res.render("categories", { categories: categories }))
     .catch((err) => {
       console.error(err);
-      res.json({ message: err });
+      res.render("categories", { message: "Unable to fetch categories." });
     });
 });
 
 // 404 route
 app.use((req, res) => {
-  res.status(404).sendFile(__dirname + "/views/404_page.html");
+  res.render("404_page");
 });
 
-// Initialize the store service
+// Initialize the store service and start the server
 storeService
   .initialize()
   .then(() => {
-    //Listen on port 8080
     app.listen(HTTP_PORT, () =>
-      console.log(
-        `"Express http server listening on port: \u001b[1;3;4;92mhttp://localhost:${HTTP_PORT}\u001b[0m`
-      )
+      console.log(`Server running at http://localhost:${HTTP_PORT}`)
     );
   })
   .catch((err) => {
-    // Log the error
-    console.error("ERROR: Initialization Failure:", err);
-    // Exit the process
+    console.error("Failed to initialize store service:", err);
     process.exit(1);
   });
