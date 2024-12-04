@@ -1,4 +1,3 @@
-import { Sequelize } from "sequelize";
 const Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(
