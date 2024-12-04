@@ -271,16 +271,18 @@ $shad-blur: 2px;
   font-size: $size;
   font-weight: 300;
 }
-@mixin text-heading($size: 2.5rem, $weight: 900) {
+@mixin text-heading($size: 2.5rem, $weight: 900, $align: left) {
   font-family: "Poppins", sans-serif;
   font-size: $size;
   font-weight: $weight;
   text-transform: uppercase;
+  text-align: $align;
 }
-@mixin text-body($size: 1rem, $weight: 400) {
+@mixin text-body($size: 1rem, $weight: 400, $align: left) {
   font-family: "Inter", sans-serif;
   font-size: $size;
   font-weight: $weight;
+  text-align: $align;
 }
 
 /*------------------------------------------ STYLES ------------------------------------------*/
@@ -305,6 +307,57 @@ hr {
   border-style: solid;
   border-color: $nav-text-color;
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+.btn {
+  @include text-body(1rem, 800);
+  padding: 0.5em 1.5em;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  background: $nav-bg-color;
+  color: $nav-text-color;
+  box-shadow: inset $shad-top $shad-top $shad-blur hsla(0, 0%, 100%, 0.2),
+    inset $shad-bottom $shad-bottom $shad-blur hsla(0, 0%, 0%, 0.6);
+  cursor: pointer;
+  transition: 0.05s ease;
+}
+
+.btn:hover {
+  color: white;
+  background: $nav-bg-hover-color;
+}
+
+.btn:active {
+  color: white;
+  background: $nav-bg-active-color;
+  box-shadow: inset $shad-top $shad-top $shad-top hsla(0, 0%, 0%, 0.6),
+    inset $shad-bottom $shad-bottom $shad-top hsla(0, 0%, 100%, 0.2);
+  transition: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  th {
+    @include text-heading(1rem, 800, center);
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    padding: 0.5em;
+    border: 1px solid hsl(220, 10%, 85%);
+  }
+
+  @include text-body(1rem, 400);
+
+  .btn {
+    @include text-body(0.8rem, 800);
+    padding: 0.5em 0.8em;
+  }
 }
 
 html {
@@ -342,6 +395,8 @@ body {
       padding: 0 2em;
       height: 100%;
       line-height: 1;
+      white-space: nowrap;
+
       span {
         font-weight: 200;
       }
@@ -357,12 +412,13 @@ body {
     }
 
     .nav-menu-wrapper {
-      @include flex(space-between, center, row);
+      @include flex(flex-end, center, row);
       width: 100%;
       max-width: 700px;
       min-width: 200px;
       margin: 0;
       list-style: none;
+      column-gap: 1em;
 
       .nav-menu-item {
         @include flex(center, center, row);
@@ -434,9 +490,52 @@ body {
     }
     .main-section {
       @include flex(flex-start, flex-start, column);
+      @include text-body(1rem, 400, left);
       width: calc(100% - #{$aside-width});
       padding: $main-container-padding-top 4%;
       text-align: justify;
+
+      h2 {
+        @include text-heading(calc(1.5rem + 1vmax), 900);
+        margin-bottom: 2vh;
+        line-height: 1.15;
+      }
+
+      .shop-item-details {
+        @include flex(space-between, flex-start, row);
+        @include text-body(1.1rem, 900);
+        width: 100%;
+        justify-self: flex-end;
+        margin: 0;
+        text-align: right;
+        strong {
+          text-transform: uppercase;
+        }
+      }
+
+      .main-section-title-wrapper {
+        @include flex(space-between, flex-start, row);
+        width: 100%;
+      }
+
+      .main-shop-row {
+        @include flex(flex-start, flex-start, row);
+        width: 100%;
+        column-gap: 5%;
+
+        aside {
+          @include flex(flex-start, center, column);
+          @include text-body(1rem, 400);
+          width: 20%;
+          min-width: 250px;
+          margin-top: calc(1.5rem + 1vmax + 2vh);
+          row-gap: 2vh;
+          h4 {
+            margin: 0;
+            @include text-heading(1.5rem, 900);
+          }
+        }
+      }
     }
     .main-section-error {
       @include flex(flex-start, flex-start, column);
@@ -633,59 +732,70 @@ body {
       }
     }
   }
-} // body
 
-/*------------------------------------------ RESPONSIVE ------------------------------------------*/
-@media screen and (max-width: 700px) {
-  .nav-container {
-    height: $nav-mobile-height;
-    padding: 0 $mobile-main-padding-x;
-    .nav-logo {
-      padding: 0;
-    }
-    .nav-menu-wrapper {
-      display: none;
-    }
-  }
-  .main-container {
-    @include flex(flex-start, center, column);
-    text-align: center;
-    h2 {
-      @include text-heading();
-    }
-    .main-aside {
-      width: 100%;
-      padding: $mobile-main-padding-y $mobile-main-padding-x;
-      min-width: initial;
-      min-height: initial;
-      height: auto;
-      text-align: center;
-      border: none;
-      border-bottom: 1px dashed hsl(220, 10%, 85%);
-      // box-shadow: inset 0 -3px 6px hsla(0, 0%, 0%, 0.1);
-
-      h2 {
-        margin: 0;
+  /*------------------------------------------ RESPONSIVE ------------------------------------------*/
+  @media screen and (max-width: 800px) {
+    .nav-container {
+      height: $nav-mobile-height;
+      padding: 0 $mobile-main-padding-x;
+      .nav-logo {
+        padding: 0;
       }
-      p {
-        margin: 0;
+      .nav-menu-wrapper {
+        display: none;
       }
     }
-    .main-section {
+    .main-container {
       @include flex(flex-start, center, column);
-      width: 100%;
-      padding: $mobile-main-padding-y $mobile-main-padding-x;
-      text-align: justify;
-      text-align-last: center;
-    }
+      text-align: center;
+      h2 {
+        @include text-heading();
+      }
+      .main-aside {
+        width: 100%;
+        padding: $mobile-main-padding-y $mobile-main-padding-x;
+        min-width: initial;
+        min-height: initial;
+        height: auto;
+        text-align: center;
+        border: none;
+        border-bottom: 1px dashed hsl(220, 10%, 85%);
+        // box-shadow: inset 0 -3px 6px hsla(0, 0%, 0%, 0.1);
 
-    .main-section-form {
-      @include flex(space-between, center, column);
-      padding: auto 0;
+        h2 {
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+      }
+      .main-section {
+        @include flex(flex-start, center, column);
+        width: 100%;
+        padding: $mobile-main-padding-y $mobile-main-padding-x;
+        text-align: justify;
+        text-align-last: center;
 
-      fieldset {
-        padding: 2vh 5%;
+        .main-shop-row {
+          @include flex(flex-start, center, column);
+
+          aside {
+            width: 100%;
+            min-width: initial;
+            font-size: 1rem;
+            row-gap: 2vh;
+          }
+        }
+      }
+
+      .main-section-form {
+        @include flex(space-between, center, column);
+        padding: auto 0;
+
+        fieldset {
+          padding: 2vh 5%;
+        }
       }
     }
   }
-}
+} // body

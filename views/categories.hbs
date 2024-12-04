@@ -1,6 +1,8 @@
 <section class="main-section">
-  <h2>Items</h2>
-  {{! <hr /> }}
+  <div class="main-section-title-wrapper">
+    <h2>Categories</h2>
+    <a href="/categories/add" class="btn">+ Add Category</a>
+  </div>
   <div class="row w-100">
     <div class="col-md-12 w-100">
       <div class="table-responsive w-100">
@@ -9,13 +11,21 @@
             <tr class="text-center">
               <th>Category ID</th>
               <th>Category Name</th>
+              <th>Remove</th>
+              <!-- Empty header for the remove button column -->
             </tr>
           </thead>
           <tbody>
             {{#each categories}}
               <tr>
-                <td class="text-center">{{id}}</td>
-                <td>{{category}}</td>
+                <td class="text-center col-md-1">{{id}}</td>
+                <td class="col-md-9">{{category}}</td>
+                <td class="text-center col-md-1">
+                  <a
+                    href="/categories/delete/{{id}}"
+                    class="btn btn-danger"
+                  >Remove</a>
+                </td>
               </tr>
             {{/each}}
           </tbody>

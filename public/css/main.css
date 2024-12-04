@@ -194,6 +194,64 @@ hr {
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 
+.btn {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: left;
+  padding: 0.5em 1.5em;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  background: hsl(220, 50%, 10%);
+  color: hsl(0, 0%, 90%);
+  box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, 0.2), inset -2px -2px 2px hsla(0, 0%, 0%, 0.6);
+  cursor: pointer;
+  transition: 0.05s ease;
+}
+
+.btn:hover {
+  color: white;
+  background: hsl(220, 50%, 20%);
+}
+
+.btn:active {
+  color: white;
+  background: hsl(220, 30%, 35%);
+  box-shadow: inset 2px 2px 2px hsla(0, 0%, 0%, 0.6), inset -2px -2px 2px hsla(0, 0%, 100%, 0.2);
+  transition: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+}
+table th {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+table th,
+table td {
+  padding: 0.5em;
+  border: 1px solid hsl(220, 10%, 85%);
+}
+table .btn {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-align: left;
+  padding: 0.5em 0.8em;
+}
+
 html {
   font-size: 15px;
 }
@@ -207,10 +265,12 @@ body {
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 400;
+  text-align: left;
   width: 100%;
   min-width: 260px;
   min-height: 100vh;
   background: white;
+  /*------------------------------------------ RESPONSIVE ------------------------------------------*/
 }
 body .nav-container {
   display: flex;
@@ -242,6 +302,7 @@ body .nav-container .nav-logo {
   padding: 0 2em;
   height: 100%;
   line-height: 1;
+  white-space: nowrap;
   transition: 0.2s ease;
 }
 body .nav-container .nav-logo span {
@@ -256,7 +317,7 @@ body .nav-container .active {
 }
 body .nav-container .nav-menu-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   flex-direction: row;
   width: 100%;
@@ -264,6 +325,7 @@ body .nav-container .nav-menu-wrapper {
   min-width: 200px;
   margin: 0;
   list-style: none;
+  column-gap: 1em;
 }
 body .nav-container .nav-menu-wrapper .nav-menu-item {
   display: flex;
@@ -313,6 +375,7 @@ body .main-container h2 {
   font-size: 2.5rem;
   font-weight: 900;
   text-transform: uppercase;
+  text-align: left;
   margin-bottom: 1.5vh;
   color: black;
   line-height: 1;
@@ -321,6 +384,7 @@ body .main-container p {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 400;
+  text-align: left;
   margin-bottom: 2vh;
   line-height: 1.5;
   color: #242424;
@@ -342,6 +406,7 @@ body .main-container .main-aside h2 {
   font-size: 2rem;
   font-weight: 900;
   text-transform: uppercase;
+  text-align: left;
   margin-bottom: 1vh;
   color: black;
   line-height: 1;
@@ -351,9 +416,76 @@ body .main-container .main-section {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
   width: calc(100% - 15%);
   padding: 50px 4%;
   text-align: justify;
+}
+body .main-container .main-section h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: calc(1.5rem + 1vmax);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 2vh;
+  line-height: 1.15;
+}
+body .main-container .main-section .shop-item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-align: left;
+  width: 100%;
+  justify-self: flex-end;
+  margin: 0;
+  text-align: right;
+}
+body .main-container .main-section .shop-item-details strong {
+  text-transform: uppercase;
+}
+body .main-container .main-section .main-section-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  width: 100%;
+}
+body .main-container .main-section .main-shop-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  width: 100%;
+  column-gap: 5%;
+}
+body .main-container .main-section .main-shop-row aside {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  width: 20%;
+  min-width: 250px;
+  margin-top: calc(1.5rem + 1vmax + 2vh);
+  row-gap: 2vh;
+}
+body .main-container .main-section .main-shop-row aside h4 {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: left;
 }
 body .main-container .main-section-error {
   display: flex;
@@ -372,6 +504,7 @@ body .main-container .main-section-error p {
   font-family: "Inter", sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
+  text-align: left;
   color: black;
 }
 body .main-container .main-section-form {
@@ -387,12 +520,14 @@ body .main-container .main-section-form input[type=file] {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
+  text-align: left;
 }
 body .main-container .main-section-form input::file-selector-button,
 body .main-container .main-section-form .form-btn {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 800;
+  text-align: left;
   margin-right: 1em;
   padding: 0.5em 1.5em;
   border: none;
@@ -437,6 +572,7 @@ body .main-container .main-section-form fieldset legend {
   font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
+  text-align: left;
   text-transform: uppercase;
   color: #242424;
   padding: 0 0.1em;
@@ -462,6 +598,7 @@ body .main-container .main-section-form fieldset .row label {
   font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
+  text-align: left;
   margin-bottom: 0.6vh;
   text-transform: capitalize;
   color: #242424;
@@ -473,6 +610,7 @@ body .main-container .main-section-form fieldset .row textarea {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
+  text-align: left;
   width: 100%;
   padding: 1vh 1%;
   border: 1px dashed hsl(220, 50%, 10%);
@@ -525,6 +663,7 @@ body .main-container .main-section-form fieldset .row .checkbox p {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
+  text-align: left;
   margin: 0;
 }
 body footer {
@@ -573,6 +712,7 @@ body footer p {
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 300;
+  text-align: left;
   color: hsl(0, 0%, 70%);
 }
 body footer p a {
@@ -583,33 +723,32 @@ body footer p a {
 body footer p a:hover {
   color: white;
 }
-
-/*------------------------------------------ RESPONSIVE ------------------------------------------*/
-@media screen and (max-width: 700px) {
-  .nav-container {
+@media screen and (max-width: 800px) {
+  body .nav-container {
     height: 80px;
     padding: 0 8%;
   }
-  .nav-container .nav-logo {
+  body .nav-container .nav-logo {
     padding: 0;
   }
-  .nav-container .nav-menu-wrapper {
+  body .nav-container .nav-menu-wrapper {
     display: none;
   }
-  .main-container {
+  body .main-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     text-align: center;
   }
-  .main-container h2 {
+  body .main-container h2 {
     font-family: "Poppins", sans-serif;
     font-size: 2.5rem;
     font-weight: 900;
     text-transform: uppercase;
+    text-align: left;
   }
-  .main-container .main-aside {
+  body .main-container .main-aside {
     width: 100%;
     padding: 5vh 8%;
     min-width: initial;
@@ -619,13 +758,13 @@ body footer p a:hover {
     border: none;
     border-bottom: 1px dashed hsl(220, 10%, 85%);
   }
-  .main-container .main-aside h2 {
+  body .main-container .main-aside h2 {
     margin: 0;
   }
-  .main-container .main-aside p {
+  body .main-container .main-aside p {
     margin: 0;
   }
-  .main-container .main-section {
+  body .main-container .main-section {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -635,14 +774,26 @@ body footer p a:hover {
     text-align: justify;
     text-align-last: center;
   }
-  .main-container .main-section-form {
+  body .main-container .main-section .main-shop-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+  body .main-container .main-section .main-shop-row aside {
+    width: 100%;
+    min-width: initial;
+    font-size: 1rem;
+    row-gap: 2vh;
+  }
+  body .main-container .main-section-form {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
     padding: auto 0;
   }
-  .main-container .main-section-form fieldset {
+  body .main-container .main-section-form fieldset {
     padding: 2vh 5%;
   }
 }
