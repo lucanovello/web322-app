@@ -512,18 +512,30 @@ body .main-container .main-section-form {
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
+}
+body .main-container .main-section-form-category {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+body .main-container .main-section-form,
+body .main-container .main-section-form-category {
   width: calc(100% - 15%);
   padding: 50px 4%;
   text-align: left;
 }
-body .main-container .main-section-form input[type=file] {
+body .main-container .main-section-form input[type=file],
+body .main-container .main-section-form-category input[type=file] {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
   text-align: left;
 }
 body .main-container .main-section-form input::file-selector-button,
-body .main-container .main-section-form .form-btn {
+body .main-container .main-section-form .form-btn,
+body .main-container .main-section-form-category input::file-selector-button,
+body .main-container .main-section-form-category .form-btn {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 800;
@@ -538,22 +550,28 @@ body .main-container .main-section-form .form-btn {
   cursor: pointer;
   transition: 0.05s ease;
 }
-body .main-container .main-section-form .form-btn {
+body .main-container .main-section-form .form-btn,
+body .main-container .main-section-form-category .form-btn {
   padding: 1em 3em;
 }
 body .main-container .main-section-form input:hover::file-selector-button,
-body .main-container .main-section-form .form-btn:hover {
+body .main-container .main-section-form .form-btn:hover,
+body .main-container .main-section-form-category input:hover::file-selector-button,
+body .main-container .main-section-form-category .form-btn:hover {
   color: white;
   background: hsl(220, 50%, 20%);
 }
 body .main-container .main-section-form input:active::file-selector-button,
-body .main-container .main-section-form .form-btn:active {
+body .main-container .main-section-form .form-btn:active,
+body .main-container .main-section-form-category input:active::file-selector-button,
+body .main-container .main-section-form-category .form-btn:active {
   color: white;
   background: hsl(220, 30%, 35%);
   box-shadow: inset 2px 2px 2px hsla(0, 0%, 0%, 0.6), inset -2px -2px 2px hsla(0, 0%, 100%, 0.2);
   transition: none;
 }
-body .main-container .main-section-form fieldset {
+body .main-container .main-section-form fieldset,
+body .main-container .main-section-form-category fieldset {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -567,7 +585,8 @@ body .main-container .main-section-form fieldset {
   row-gap: 3vh;
   box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.2);
 }
-body .main-container .main-section-form fieldset legend {
+body .main-container .main-section-form fieldset legend,
+body .main-container .main-section-form-category fieldset legend {
   font-family: "Poppins", sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
@@ -577,24 +596,30 @@ body .main-container .main-section-form fieldset legend {
   color: #242424;
   padding: 0 0.1em;
 }
-body .main-container .main-section-form fieldset .column {
+body .main-container .main-section-form fieldset .column,
+body .main-container .main-section-form-category fieldset .column {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
 }
-body .main-container .main-section-form fieldset .row {
+body .main-container .main-section-form fieldset .row,
+body .main-container .main-section-form-category fieldset .row {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 }
 body .main-container .main-section-form fieldset .column,
-body .main-container .main-section-form fieldset .row {
+body .main-container .main-section-form fieldset .row,
+body .main-container .main-section-form-category fieldset .column,
+body .main-container .main-section-form-category fieldset .row {
   width: 100%;
 }
 body .main-container .main-section-form fieldset .column label,
-body .main-container .main-section-form fieldset .row label {
+body .main-container .main-section-form fieldset .row label,
+body .main-container .main-section-form-category fieldset .column label,
+body .main-container .main-section-form-category fieldset .row label {
   font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
@@ -606,7 +631,11 @@ body .main-container .main-section-form fieldset .row label {
 body .main-container .main-section-form fieldset .column input,
 body .main-container .main-section-form fieldset .column textarea,
 body .main-container .main-section-form fieldset .row input,
-body .main-container .main-section-form fieldset .row textarea {
+body .main-container .main-section-form fieldset .row textarea,
+body .main-container .main-section-form-category fieldset .column input,
+body .main-container .main-section-form-category fieldset .column textarea,
+body .main-container .main-section-form-category fieldset .row input,
+body .main-container .main-section-form-category fieldset .row textarea {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
@@ -623,11 +652,17 @@ body .main-container .main-section-form fieldset .row textarea {
 body .main-container .main-section-form fieldset .column input:focus,
 body .main-container .main-section-form fieldset .column textarea:focus,
 body .main-container .main-section-form fieldset .row input:focus,
-body .main-container .main-section-form fieldset .row textarea:focus {
+body .main-container .main-section-form fieldset .row textarea:focus,
+body .main-container .main-section-form-category fieldset .column input:focus,
+body .main-container .main-section-form-category fieldset .column textarea:focus,
+body .main-container .main-section-form-category fieldset .row input:focus,
+body .main-container .main-section-form-category fieldset .row textarea:focus {
   border: 1px solid hsl(220, 50%, 10%);
 }
 body .main-container .main-section-form fieldset .column select,
-body .main-container .main-section-form fieldset .row select {
+body .main-container .main-section-form fieldset .row select,
+body .main-container .main-section-form-category fieldset .column select,
+body .main-container .main-section-form-category fieldset .row select {
   width: 100%;
   padding: 1vh 1%;
   border: 1px dashed hsl(220, 50%, 10%);
@@ -637,7 +672,9 @@ body .main-container .main-section-form fieldset .row select {
   transition: 0.2s ease;
 }
 body .main-container .main-section-form fieldset .column .checkbox,
-body .main-container .main-section-form fieldset .row .checkbox {
+body .main-container .main-section-form fieldset .row .checkbox,
+body .main-container .main-section-form-category fieldset .column .checkbox,
+body .main-container .main-section-form-category fieldset .row .checkbox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -647,11 +684,15 @@ body .main-container .main-section-form fieldset .row .checkbox {
   column-gap: 0.3em;
 }
 body .main-container .main-section-form fieldset .column .checkbox label,
-body .main-container .main-section-form fieldset .row .checkbox label {
+body .main-container .main-section-form fieldset .row .checkbox label,
+body .main-container .main-section-form-category fieldset .column .checkbox label,
+body .main-container .main-section-form-category fieldset .row .checkbox label {
   margin-right: 1em;
 }
 body .main-container .main-section-form fieldset .column .checkbox input,
-body .main-container .main-section-form fieldset .row .checkbox input {
+body .main-container .main-section-form fieldset .row .checkbox input,
+body .main-container .main-section-form-category fieldset .column .checkbox input,
+body .main-container .main-section-form-category fieldset .row .checkbox input {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -659,7 +700,9 @@ body .main-container .main-section-form fieldset .row .checkbox input {
   cursor: pointer;
 }
 body .main-container .main-section-form fieldset .column .checkbox p,
-body .main-container .main-section-form fieldset .row .checkbox p {
+body .main-container .main-section-form fieldset .row .checkbox p,
+body .main-container .main-section-form-category fieldset .column .checkbox p,
+body .main-container .main-section-form-category fieldset .row .checkbox p {
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;

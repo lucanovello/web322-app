@@ -12,6 +12,7 @@ Date:                   12-4-2024
 Vercel Web App URL:     https://web322app-lucanovello.vercel.app/
 GitHub Repository URL:  https://github.com/lucanovello/web322-app
 ********************************************************************************/
+require("dotenv").config();
 const express = require("express");
 const exphbs = require("express-handlebars");
 const multer = require("multer");
@@ -20,7 +21,6 @@ const streamifier = require("streamifier");
 const bodyParser = require("body-parser");
 const path = require("path");
 const storeService = require("./store-service");
-require("dotenv").config();
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
@@ -67,6 +67,9 @@ const hbs = exphbs.create({
       let day = dateObj.getDate().toString();
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
+    formatPrice: function (price) {
+      return parseFloat(price).toFixed(2);
+    },
   },
 });
 
@@ -93,17 +96,28 @@ app.get("/about", (req, res) => {
 app.get("/shop", async (req, res) => {
   let viewData = {};
   try {
-    let items = await storeService.getPublishedItems();
-    let publishedItems = items.filter((item) => item.published === true);
-    viewData.items = publishedItems;
-  } catch (err) {
-    viewData.message = "no results";
-  }
-  try {
+    // Get categories
     let categories = await storeService.getCategories();
     viewData.categories = categories;
+
+    // Get items for the selected category or all items
+    if (req.query.category) {
+      viewData.items = await storeService.getPublishedItemsByCategory(
+        req.query.category
+      );
+      viewData.viewingCategory = req.query.category;
+    } else {
+      viewData.items = await storeService.getPublishedItems();
+    }
+
+    // Set the first item as default if items are available
+    if (viewData.items.length > 0) {
+      viewData.item = viewData.items[0];
+    } else {
+      viewData.message = "No items available.";
+    }
   } catch (err) {
-    viewData.categoriesMessage = "no results";
+    viewData.message = "An error occurred while loading the shop.";
   }
   res.render("shop", { data: viewData });
 });
@@ -112,29 +126,29 @@ app.get("/shop", async (req, res) => {
 app.get("/shop/:id", async (req, res) => {
   let viewData = {};
   try {
-    let items = [];
-    if (req.query.category) {
-      items = await storeService.getPublishedItemsByCategory(
-        req.query.category
-      );
-    } else {
-      items = await storeService.getPublishedItems();
-    }
-    items.sort((a, b) => new Date(b.itemDate) - new Date(a.itemDate));
-    viewData.items = items;
-  } catch (err) {
-    viewData.message = "no results";
-  }
-  try {
-    viewData.item = await storeService.getItemById(req.params.id);
-  } catch (err) {
-    viewData.message = "no results";
-  }
-  try {
+    // Get categories
     let categories = await storeService.getCategories();
     viewData.categories = categories;
+
+    // Get items for the selected category or all items
+    if (req.query.category) {
+      viewData.items = await storeService.getPublishedItemsByCategory(
+        req.query.category
+      );
+      viewData.viewingCategory = req.query.category;
+    } else {
+      viewData.items = await storeService.getPublishedItems();
+    }
+
+    // Fetch the requested item by ID
+    viewData.item = await storeService.getItemById(req.params.id);
+
+    // If the item isn't valid or doesn't exist, fallback to the first item
+    if (!viewData.item && viewData.items.length > 0) {
+      viewData.item = viewData.items[0];
+    }
   } catch (err) {
-    viewData.categoriesMessage = "no results";
+    viewData.message = "An error occurred while loading the shop.";
   }
   res.render("shop", { data: viewData });
 });
@@ -146,12 +160,12 @@ app.get("/items", (req, res) => {
     .getAllItems()
     .then((data) => {
       if (data.length > 0) {
-        res.render("Items", { data: { Items: data } });
+        res.render("items", { data: { Items: data } });
       } else {
-        res.render("Items", { data: { message: "no results" } });
+        res.render("items", { data: { message: "no results" } });
       }
     })
-    .catch((err) => res.render("Items", { data: { message: "no results" } }));
+    .catch((err) => res.render("items", { data: { message: "no results" } }));
 });
 
 // GET: /Items/add
@@ -168,7 +182,7 @@ app.post("/items/add", upload.single("featureImage"), (req, res) => {
     req.body.featureImage = imgUrl;
     storeService
       .addItem(req.body)
-      .then(() => res.redirect("/Items"))
+      .then(() => res.redirect("/items"))
       .catch((err) => res.status(500).send(err));
   };
   if (req.file) {
@@ -188,7 +202,7 @@ app.get("/items/delete/:id", (req, res) => {
   const itemId = req.params.id;
   storeService
     .deleteItemById(itemId)
-    .then(() => res.redirect("/Items"))
+    .then(() => res.redirect("/items"))
     .catch((err) =>
       res.status(500).send("Unable to Remove Item / Item not found")
     );

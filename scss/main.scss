@@ -552,6 +552,13 @@ body {
 
     .main-section-form {
       @include flex(space-between, flex-start, column);
+    }
+    .main-section-form-category {
+      @include flex(flex-start, flex-start, column);
+    }
+
+    .main-section-form,
+    .main-section-form-category {
       width: calc(100% - #{$aside-width});
       padding: $main-container-padding-top 4%;
       text-align: left;
@@ -677,7 +684,7 @@ body {
           } // .checkbox
         } // .column, .row
       } // fieldset
-    } // .main-section-form
+    } // .main-section-form, .main-section-form-category
   } // .main-container
 
   footer {

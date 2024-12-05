@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize");
 require("dotenv").config();
+const Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -41,31 +41,6 @@ module.exports.initialize = () => {
     sequelize
       .sync()
       .then(() => {
-        // Item.create({
-        //   body: "Embark on a legendary adventure! The Legend of Zelda for the Nintendo Entertainment System (NES) is an epic action-adventure game where you guide Link on a quest to rescue Princess Zelda and defeat the evil Ganon. Explore dungeons, solve puzzles, and wield iconic items in this groundbreaking 1986 classic that defined a genre.",
-        //   title: "The Legend of Zelda (NES) - 1986",
-        //   postDate: new Date(),
-        //   featureImage:
-        //     "https://upload.wikimedia.org/wikipedia/en/4/41/Legend_of_zelda_cover_%28with_cartridge%29_gold.png",
-        //   published: true,
-        //   price: 59.99,
-        // })
-        //   .then((item) => {
-        //     console.log(`Item added successfully!`);
-        //   })
-        //   .catch((error) => {
-        //     console.log(`Item failed to add!`);
-        //   });
-
-        // Category.create({
-        //   category: "Video Games",
-        // })
-        //   .then((category) => {
-        //     console.log(`Category added successfully!`);
-        //   })
-        //   .catch((error) => {
-        //     console.log(`Category failed to add!`);
-        //   });
         resolve(
           "Connection to the database has been established successfully."
         );
