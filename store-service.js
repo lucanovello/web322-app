@@ -7,6 +7,7 @@ var sequelize = new Sequelize(
   {
     host: "ep-late-leaf-a50nj9y3-pooler.us-east-2.aws.neon.tech",
     dialect: "postgres",
+    dialectModule: require("pg"),
     port: 5432,
     dialectOptions: {
       ssl: { rejectUnauthorized: false },
