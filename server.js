@@ -20,6 +20,7 @@ const streamifier = require("streamifier");
 const bodyParser = require("body-parser");
 const path = require("path");
 const storeService = require("./store-service");
+require("dotenv").config();
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
@@ -140,7 +141,7 @@ app.get("/shop/:id", async (req, res) => {
 
 // ITEM ROUTES -----------------------------------------------------------
 // GET: /Items
-app.get("/Items", (req, res) => {
+app.get("/items", (req, res) => {
   storeService
     .getAllItems()
     .then((data) => {
@@ -154,7 +155,7 @@ app.get("/Items", (req, res) => {
 });
 
 // GET: /Items/add
-app.get("/Items/add", (req, res) => {
+app.get("/items/add", (req, res) => {
   storeService
     .getCategories()
     .then((data) => res.render("addItem", { categories: data }))
@@ -162,7 +163,7 @@ app.get("/Items/add", (req, res) => {
 });
 
 // POST: /Items/add
-app.post("/Items/add", upload.single("featureImage"), (req, res) => {
+app.post("/items/add", upload.single("featureImage"), (req, res) => {
   const processPost = () => {
     req.body.featureImage = imgUrl;
     storeService
@@ -183,7 +184,7 @@ app.post("/Items/add", upload.single("featureImage"), (req, res) => {
 });
 
 // GET: /Items/delete/:id
-app.get("/post/delete/:id", (req, res) => {
+app.get("/items/delete/:id", (req, res) => {
   const itemId = req.params.id;
   storeService
     .deleteItemById(itemId)

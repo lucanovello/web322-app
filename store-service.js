@@ -1,11 +1,12 @@
 const Sequelize = require("sequelize");
+require("dotenv").config();
 
 var sequelize = new Sequelize(
-  "SenecaWeb322DB",
-  "SenecaWeb322DB_owner",
-  "hJS5QLysdBC9",
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    host: "ep-late-leaf-a50nj9y3-pooler.us-east-2.aws.neon.tech",
+    host: process.env.DB_HOST,
     dialect: "postgres",
     dialectModule: require("pg"),
     port: 5432,
