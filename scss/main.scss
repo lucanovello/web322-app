@@ -20,7 +20,7 @@ $nav-mobile-height: 80px;
 
 $main-container-padding-top: calc($nav-height);
 
-$aside-width: 15%;
+$aside-width: 12.5%;
 
 $mobile-main-padding-x: 8%;
 $mobile-main-padding-y: 5vh;
@@ -392,7 +392,6 @@ body {
     .nav-logo {
       @include flex(center, center, column);
       @include text-logo();
-      padding: 0 2em;
       height: 100%;
       line-height: 1;
       white-space: nowrap;
@@ -433,8 +432,11 @@ body {
           width: 100%;
           height: 100%;
           padding: 1.618vh 0;
+          line-height: 1.1;
           text-decoration: none;
           text-transform: uppercase;
+          text-align: center;
+          white-space: nowrap;
         }
       }
       .nav-menu-item:hover {
@@ -472,7 +474,7 @@ body {
     .main-aside {
       @include flex(flex-start, center, column);
       width: $aside-width;
-      min-width: 200px;
+      min-width: 150px;
       padding: $main-container-padding-top 2%;
       background: $color-accent;
       border-right: 1px solid hsl(220, 10%, 85%);

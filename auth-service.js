@@ -16,10 +16,7 @@ let User; // to be defined on new connection (see initialize)
 
 module.exports.initialize = function () {
   return new Promise(function (resolve, reject) {
-    let db = mongoose.createConnection(process.env.MONGO_DB_CONN_STRING, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    let db = mongoose.createConnection(process.env.MONGO_DB_CONN_STRING);
     db.on("error", (err) => {
       reject(err); // reject the promise with the provided error
     });
