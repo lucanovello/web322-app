@@ -1,0 +1,38 @@
+{{#if errorMessage}}
+  <section class="main-section-error">
+    <div class="alert alert-danger">
+      <strong>Error:</strong>
+      {{errorMessage}}
+    </div>
+  </section>
+{{/if}}
+<form class="main-section-form-category" action="/login" method="POST">
+  <h2>Login</h2>
+  <fieldset>
+    {{! <legend>Login</legend> }}
+    <div class="column">
+      <label for="userName">User Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="userName"
+        name="userName"
+        placeholder="User Name"
+        required
+        value="{{userName}}"
+      />
+    </div>
+    <div class="column">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Password"
+        required
+      />
+    </div>
+  </fieldset>
+  <input class="form-btn" type="submit" value="Login" />
+</form>

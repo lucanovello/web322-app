@@ -1,0 +1,74 @@
+<form class="main-section-form-category" action="/register" method="POST">
+  {{#if successMessage}}
+    <div class="w-100 d-flex flex-column align-items-center text-center">
+      <div
+        class="alert alert-success d-flex align-items-center h-100 text-center"
+      >
+        <strong>Success:</strong>
+        {{successMessage}}
+      </div>
+      <a class="btn btn-success pull-right mt-4" href="/login">Proceed to Log in</a>
+    </div>
+  {{else}}
+    <h2>Register</h2>
+    {{! <hr /> }}
+    <fieldset>
+      <div class="column">
+        <label for="userName">User Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="userName"
+          name="userName"
+          placeholder="User Name"
+          required
+          value="{{userName}}"
+        />
+      </div>
+      <div class="column">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Email Address"
+          required
+        />
+      </div>
+      <div class="column">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div class="column">
+        <label for="password2">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password2"
+          name="password2"
+          placeholder="Confirm Password"
+          required
+        />
+      </div>
+    </fieldset>
+    <input class="form-btn" type="submit" value="Register" />
+    {{#if errorMessage}}
+      <div class="mt-4 w-100 d-flex justify-content-center text-center">
+        <div
+          class="alert alert-danger d-flex align-items-center h-100 text-center"
+        >
+          <strong>Error:</strong>
+          {{errorMessage}}
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+</form>

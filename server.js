@@ -15,15 +15,39 @@ GitHub Repository URL:  https://github.com/lucanovello/web322-app
 require("dotenv").config();
 const express = require("express");
 const exphbs = require("express-handlebars");
+const clientSessions = require("client-sessions");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 const bodyParser = require("body-parser");
 const path = require("path");
 const storeService = require("./store-service");
+const authData = require("./auth-service");
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
+
+app.use(
+  clientSessions({
+    cookieName: "session",
+    secret: process.env.CS_SECRET,
+    duration: 2 * 60 * 1000, // 2 minutes
+    activeDuration: 1000 * 60, // 1 minute
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+}
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -155,7 +179,7 @@ app.get("/shop/:id", async (req, res) => {
 
 // ITEM ROUTES -----------------------------------------------------------
 // GET: /Items
-app.get("/items", (req, res) => {
+app.get("/items", ensureLogin, (req, res) => {
   storeService
     .getAllItems()
     .then((data) => {
@@ -169,7 +193,7 @@ app.get("/items", (req, res) => {
 });
 
 // GET: /Items/add
-app.get("/items/add", (req, res) => {
+app.get("/items/add", ensureLogin, (req, res) => {
   storeService
     .getCategories()
     .then((data) => res.render("addItem", { categories: data }))
@@ -177,28 +201,33 @@ app.get("/items/add", (req, res) => {
 });
 
 // POST: /Items/add
-app.post("/items/add", upload.single("featureImage"), (req, res) => {
-  const processPost = () => {
-    req.body.featureImage = imgUrl;
-    storeService
-      .addItem(req.body)
-      .then(() => res.redirect("/items"))
-      .catch((err) => res.status(500).send(err));
-  };
-  if (req.file) {
-    let stream = cloudinary.uploader.upload_stream((error, result) => {
-      if (result) imgUrl = result.url;
+app.post(
+  "/items/add",
+  ensureLogin,
+  upload.single("featureImage"),
+  (req, res) => {
+    const processPost = () => {
+      req.body.featureImage = imgUrl;
+      storeService
+        .addItem(req.body)
+        .then(() => res.redirect("/items"))
+        .catch((err) => res.status(500).send(err));
+    };
+    if (req.file) {
+      let stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) imgUrl = result.url;
+        processPost();
+      });
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    } else {
+      req.body.featureImage = "";
       processPost();
-    });
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
-  } else {
-    req.body.featureImage = "";
-    processPost();
+    }
   }
-});
+);
 
 // GET: /Items/delete/:id
-app.get("/items/delete/:id", (req, res) => {
+app.get("/items/delete/:id", ensureLogin, (req, res) => {
   const itemId = req.params.id;
   storeService
     .deleteItemById(itemId)
@@ -210,7 +239,7 @@ app.get("/items/delete/:id", (req, res) => {
 
 // CATEGORY ROUTES -----------------------------------------------------------
 // GET: /categories
-app.get("/categories", (req, res) => {
+app.get("/categories", ensureLogin, (req, res) => {
   storeService
     .getCategories()
     .then((data) => {
@@ -221,12 +250,12 @@ app.get("/categories", (req, res) => {
 });
 
 // GET: /categories/add
-app.get("/categories/add", (req, res) => {
+app.get("/categories/add", ensureLogin, (req, res) => {
   res.render("addCategory");
 });
 
 // POST: /categories/add
-app.post("/categories/add", (req, res) => {
+app.post("/categories/add", ensureLogin, (req, res) => {
   storeService
     .addCategory(req.body)
     .then(() => res.redirect("/categories"))
@@ -234,7 +263,7 @@ app.post("/categories/add", (req, res) => {
 });
 
 // GET: /categories/delete/:id
-app.get("/categories/delete/:id", (req, res) => {
+app.get("/categories/delete/:id", ensureLogin, (req, res) => {
   storeService
     .deleteCategoryById(req.params.id)
     .then(() => res.redirect("/categories"))
@@ -243,14 +272,73 @@ app.get("/categories/delete/:id", (req, res) => {
     );
 });
 
+// USER ROUTES -----------------------------------------------------------
+// GET: /login
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+// GET: /register
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+// POST: /register
+app.post("/register", (req, res) => {
+  authData
+    .registerUser(req.body)
+    .then(() => res.render("register", { successMessage: "User created" }))
+    .catch((err) =>
+      res.render("register", { errorMessage: err, userName: req.body.userName })
+    );
+});
+
+// POST: /login
+app.post("/login", (req, res) => {
+  authData
+    .checkUser(req.body)
+    .then((user) => {
+      req.session.user = user;
+      res.redirect("/items");
+    })
+    .catch((err) => {
+      res.render("login", {
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+
+// GET: /logout
+app.get("/logout", (req, res) => {
+  req.session.reset();
+  res.redirect("/");
+});
+
+// GET: /userHistory
+app.get("/userHistory", ensureLogin, (req, res) => {
+  res.render("userHistory");
+});
+
+app.use((req, res, next) => {
+  res.status(404).render("404_page");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
+
 // START SERVER -----------------------------------------------------------
 storeService
   .initialize()
-  .then(() => {
-    app.listen(HTTP_PORT, () => {
-      console.log(`Server running on port ${HTTP_PORT}`);
+  .then(authData.initialize)
+  .then(function () {
+    app.listen(HTTP_PORT, function () {
+      console.log("app listening on: " + HTTP_PORT);
     });
   })
-  .catch((err) => {
-    console.log(`Unable to start server: ${err}`);
+  .catch(function (err) {
+    console.log("unable to start server: " + err);
   });
