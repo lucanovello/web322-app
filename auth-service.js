@@ -59,6 +59,7 @@ module.exports.registerUser = function (userData) {
 module.exports.checkUser = function (userData) {
   return new Promise((resolve, reject) => {
     if (!User) {
+      console.error(userData);
       reject("User model is not initialized.");
       return;
     }

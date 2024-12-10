@@ -21,6 +21,8 @@ const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 const bodyParser = require("body-parser");
 const path = require("path");
+const mongoose = require("mongoose");
+
 const storeService = require("./store-service");
 const authData = require("./auth-service");
 
@@ -107,6 +109,17 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTES -----------------------------------------------------------
+// DB TEST ROUTE
+app.get("/test-db", async (req, res) => {
+  try {
+    const db = mongoose.createConnection(process.env.MONGO_DB_CONN_STRING);
+    db.once("open", () => res.send("Database connection successful!"));
+    db.on("error", (err) => res.status(500).send(`Database error: ${err}`));
+  } catch (err) {
+    res.status(500).send(`Unexpected error: ${err}`);
+  }
+});
+
 app.get("/", (req, res) => {
   res.redirect("/about");
 });
