@@ -51,7 +51,7 @@ module.exports.registerUser = function (userData) {
             });
         })
         .catch((err) => {
-          reject("There was an error encrypting the password");
+          reject("There was an error encrypting the password: " + err);
         });
     }
   });
