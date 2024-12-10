@@ -333,13 +333,13 @@ app.use((err, req, res, next) => {
 // START SERVER -----------------------------------------------------------
 storeService
   .initialize()
-  .then(authData.initialize)
-  .then(function () {
+  .then(() => authData.initialize())
+  .then(() => {
     app.listen(HTTP_PORT, function () {
-      console.log("app listening on: " + HTTP_PORT);
+      console.log(`App listening on: http://localhost:${HTTP_PORT}`);
     });
   })
-  .catch(function (err) {
+  .catch((err) => {
     console.log("unable to start server: " + err);
   });
 

@@ -59,6 +59,10 @@ module.exports.registerUser = function (userData) {
 
 module.exports.checkUser = function (userData) {
   return new Promise((resolve, reject) => {
+    if (!User) {
+      reject("User model is not initialized");
+      return;
+    }
     User.find({ userName: userData.userName })
       .exec()
       .then((users) => {
