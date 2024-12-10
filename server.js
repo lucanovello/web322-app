@@ -333,14 +333,14 @@ app.use((err, req, res, next) => {
 // START SERVER -----------------------------------------------------------
 storeService
   .initialize()
-  .then(() => authData.initialize())
+  .then(authData.initialize)
   .then(() => {
-    app.listen(HTTP_PORT, function () {
-      console.log(`App listening on: http://localhost:${HTTP_PORT}`);
+    app.listen(HTTP_PORT, () => {
+      console.log(`Server is running on http://localhost:${HTTP_PORT}`);
     });
   })
   .catch((err) => {
-    console.log("unable to start server: " + err);
+    console.error("Unable to start server:", err);
   });
 
 module.exports = app;
