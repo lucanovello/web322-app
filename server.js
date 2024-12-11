@@ -9,6 +9,7 @@ the course.
 Name:                   Luca Novello
 Student ID:             038515003
 Date:                   12-11-2024
+Replit Web App URL:     https://replit.com/@gnovello/web322-app
 Vercel Web App URL:     https://web322app-lucanovello.vercel.app/
 GitHub Repository URL:  https://github.com/lucanovello/web322-app
 ********************************************************************************/
